@@ -1,0 +1,125 @@
+import React, { useEffect, useState } from 'react';
+import { Navbar, Booking, Queue, AdminQueueList } from "../import-export/ImportExport";
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
+function DoctorDetails () {
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const { doctorId } = useParams();
+    const [doctor, setDoctor] = useState(null); // To store doctor details
+    const [bookingForm, setBookingForm] = useState(false); // To show the booking form
+    const [bookings, setBookings] = useState([]); // To store the booking's list for queue
+    const [isAvailable, setIsAvailable] = useState(false); // To check availability of doctor
+    const [checkAdmin, setCheckAdmin] = useState(false); // To Checking whether logged user is admin
+
+    useEffect(() => {
+        const fetchDoctorDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5500/doctor/getInfo/${doctorId}`);
+                setDoctor(response.data);
+                checkAvailability(response.data.availability);
+                if(response.data.userId === user?.userId){
+                    setCheckAdmin(true);
+                }
+            } catch (error) {
+                console.error('Error fetching doctor details:', error);
+            }
+        };
+        fetchDoctorDetails();
+    }, [doctorId]);
+    
+    useEffect(() => {
+        const fetchAllBookings = async () => {
+          try {
+            const response = await axios.get(`http://localhost:5500/appointment/getQueueList/${doctorId}`);
+            setBookings(response.data);
+          } catch (error) {
+            console.error('Error fetching queue details:', error);
+          }
+        };
+        fetchAllBookings();
+      }, [bookingForm]);
+
+    const checkAvailability = (availability) => {
+        const now = new Date();
+        const currentDay = now.toLocaleString('en-US', { weekday: 'long' });
+        const currentTime = now.toTimeString().split(' ')[0].slice(0, 5);
+
+        for (const timeSlot of availability) {
+            if (timeSlot.day === currentDay) {
+                if (currentTime >= timeSlot.start && currentTime <= timeSlot.end) {
+                    setIsAvailable(true);
+                    return;
+                }
+            }
+        }
+        setIsAvailable(false);
+    };
+
+    const handleBookingSuccess = () => {
+        setBookingForm(false); 
+    };
+
+    const handleBookingClose = () => {
+        setBookingForm(false);
+    };
+
+    if (!doctor) return <div>Loading...</div>;
+
+    return (
+        <>
+        <Navbar />
+        <div className="mt-10 flex flex-col sm:flex-row justify-center gap-2">
+            <div className='mb-8'>
+            <div className="bg-white shadow-lg rounded-lg p-4 mb-2 flex items-center">
+                <img className="w-24 h-24 rounded-full mr-4" src="/team-2.jpg" alt={doctor.fullname} />
+                <div>
+                    <h2 className="text-2xl font-extrabold mb-4">Dr. {doctor.fullname}</h2>
+                    <p><span className='font-bold'>Qualification :</span> {doctor.qualifications}</p>
+                    <p><span className='font-bold'>Specialised in :</span> {doctor.specializations}</p>
+                    <p><span className='font-bold'>Hospital Name :</span> {doctor.hospitalname}</p>
+                    <p><span className='font-bold'>Address :</span> {doctor.address}</p>
+                </div>
+            </div>
+            <div className="bg-white shadow-lg rounded-lg p-4">
+                <h2 className="font-bold text-center min-h-40">Announcements</h2>
+                <p>No Announcements so far....</p>
+            </div>
+            </div>
+
+            <div className="bg-white shadow-md rounded p-4 mb-8">
+                <h3 className="text-xl font-semibold mb-4">Working hours</h3>
+                {doctor && doctor.availability &&(
+                    <ul>
+                        {doctor.availability.map((timeSlot, index) => (
+                            <li key={index}>
+                                <p>{timeSlot.day} : From: {timeSlot.start} To: {timeSlot.end}</p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+                {isAvailable ? (
+                        <button
+                            type="button"
+                            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+                            onClick={() => {setBookingForm(true)}}
+                        >
+                            Book
+                        </button>
+                    ) : (
+                        <p>The Booking is Disabled for Now</p>
+                    )}
+            </div>
+        </div>
+        { bookingForm && <Booking doctorId={doctorId} onBookingSuccess={handleBookingSuccess} onClose={handleBookingClose} />}
+        {checkAdmin ? 
+          <AdminQueueList bookings={bookings} setBookings={setBookings}/> :
+          <Queue bookings={bookings} setBookings={setBookings}/> 
+        }
+       </>
+    );
+}
+
+export default DoctorDetails;

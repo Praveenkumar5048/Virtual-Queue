@@ -1,0 +1,84 @@
+import React, {useState} from 'react'
+import axios from 'axios'
+
+function Booking (props) {
+
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const [patientDetails, setPatientDetails] = useState({
+    patientName: '',
+    age: '',
+    gender: '',
+    contact: '',
+    bookedBy: user?.userId
+  });
+
+  const handleBooking = async () => {
+    try {
+        const response = await axios.post('http://localhost:5500/appointment/bookAppointment', {
+          doctorId: props.doctorId,
+          ...patientDetails,
+        });
+        props.onBookingSuccess();
+    } catch (error) {
+        console.error('Error booking appointment:', error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPatientDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
+  };
+
+  return (
+    <>
+    <div className="relative bg-white shadow-lg rounded-lg p-4 w-3/4 sm:w-2/5 mx-auto border-2 border-blue-400">
+      <button 
+      className="absolute top-1 right-4 text-gray-700 hover:text-gray-900 text-4xl"
+      onClick={props.onClose}>&times;</button>
+      <h3 className="text-xl text-center font-semibold mb-4">Book Appointment</h3>
+      <div className="grid grid-cols-1 gap-4">
+      <input
+        type="text"
+        name="patientName"
+        value={patientDetails.patientName}
+        onChange={handleChange}
+        placeholder="Patient Name"
+        className="p-2 bg-gray-100 border-0 rounded"
+      />
+      <input
+          type="number"
+          name="age"
+          value={patientDetails.age}
+          onChange={handleChange}
+          placeholder="Patient Age"
+          className="p-2 rounded bg-gray-100 border-0"
+      />
+      <select
+        name="gender"
+        value={patientDetails.gender}
+        onChange={handleChange}
+        className="p-2 bg-gray-100 border-0 rounded"
+    >
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      </select>
+      <input
+        type="text"
+        name="contact"
+        value={patientDetails.contact}
+        onChange={handleChange}
+        placeholder="Contact Number"
+        className="p-2 rounded bg-gray-100 border-0"
+      />
+      <button onClick={handleBooking} className="p-2 bg-theme text-white rounded hover:bg-slate-300 ">
+          Book Appointment
+      </button>
+    </div>
+  </div>
+</>
+  );
+}
+
+export default Booking;
