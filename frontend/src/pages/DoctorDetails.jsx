@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Booking, Queue, AdminQueueList } from "../import-export/ImportExport";
+import { Navbar, Booking, Queue, AdminQueueList, Announcement } from "../import-export/ImportExport";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,17 +14,14 @@ function DoctorDetails () {
     const [isAvailable, setIsAvailable] = useState(false); // To check availability of doctor
     const [checkAdmin, setCheckAdmin] = useState(false); // To Checking whether logged user is admin
 
-    const [announcementText, setAnnouncementText] = useState('');
-    const [announcements, setAnnouncements] = useState([]);
-    const [showAddModal, setShowAddModal] = useState(false);
 
     useEffect(() => {
         const fetchDoctorDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:5500/doctor/getInfo/${doctorId}`);
-                setDoctor(response.data.doctor);
-                checkAvailability(response.data.doctor.availability);
-                if(response.data.doctor.userId === user?.userId){
+                setDoctor(response.data);
+                checkAvailability(response.data.availability);
+                if(response.data.userId === user?.userId){
                     setCheckAdmin(true);
                 }
             } catch (error) {
@@ -77,16 +74,6 @@ function DoctorDetails () {
         return `${hour}:${minutes} ${period}`;
     };
     
-    const addAnnouncement = async () => {
-        try {
-            await axios.post('/api/announcements', { announcement: announcementText });
-            setAnnouncementText('');
-            setShowAddModal(false);
-            fetchAnnouncements();
-        } catch (error) {
-            console.error('Error adding announcement:', error);
-        }
-    };
 
     if (!doctor) return <div>Loading...</div>;
 
@@ -114,44 +101,7 @@ function DoctorDetails () {
                 </div>
 
                 <div className="bg-white shadow-lg rounded-lg p-4">
-                    <span className="flex items-center font-bold text-center ">
-                        Announcements
-                        <img src="/announcement.svg" alt="icon" className="w-8 h-8 m-2" />
-                    </span>
-                    {announcements.length === 0 ? (
-                        <p>No Announcements so far....</p>
-                    ) : (
-                        <ul>
-                            {announcements.map((announcement) => (
-                                <li key={announcement._id}>{announcement.announcement}</li>
-                            ))}
-                        </ul>
-                    )}
-                    <img
-                        src="/add-icon.svg"
-                        alt="icon"
-                        className="w-8 h-8 cursor-pointer"
-                        onClick={() => setShowAddModal(true)}
-                    />
-
-                    {showAddModal && (
-                        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-                            <div className="bg-white p-4 rounded-lg">
-                                <textarea
-                                    value={announcementText}
-                                    onChange={(e) => setAnnouncementText(e.target.value)}
-                                    placeholder="Enter today's announcement here"
-                                    className="w-full h-24 resize-none border border-gray-300 rounded mb-2"
-                                />
-                                <button onClick={addAnnouncement} className="bg-primary text-white px-4 py-2 rounded">
-                                    Add Announcement
-                                </button>
-                                <button onClick={() => setShowAddModal(false)} className="ml-2 px-4 py-2 rounded text-gray-600 hover:bg-secondary">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    )}
+                    <Announcement doctorId={doctorId} checkAdmin={checkAdmin}/>
                 </div>
 
             </div>

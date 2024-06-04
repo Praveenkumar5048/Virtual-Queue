@@ -52,6 +52,22 @@ export const getDoctorDetails = asyncHandler(async (req, res, next) => {
     if (!doctor) {
         return res.status(404).json({ message: 'Doctor not found' }); 
     }
-    const announcements = await Announcement.find({ userId: doctorId });
-    res.status(200).json({doctor, announcements});
+    
+    res.status(200).json(doctor);
 });
+
+export const fetchAnnouncement =  asyncHandler(async (req, res, next) =>{
+    const doctorId = req.params.doctorId;
+    const announcements = await Announcement.find({ userId: doctorId });
+    res.status(200).json(announcements);
+})
+
+export const addAnnouncement = asyncHandler(async (req, res, next) =>{
+    const doctorId = req.params.doctorId;
+    const createAnnouncement = await Announcement.create({
+        userId: doctorId,
+        announcement: req.body.announcement
+    });
+    return res.status(201).json({ message: "Announcement created successfully"});
+
+})
