@@ -32,7 +32,7 @@ function Booking (props) {
 
   return (
     <>
-    <div className="relative bg-white shadow-lg rounded-lg p-4 w-3/4 sm:w-2/5 mx-auto border-2 border-blue-400">
+    <div className="relative bg-white shadow-lg rounded-lg p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-blue-400">
       <button 
       className="absolute top-1 right-4 text-gray-700 hover:text-gray-900 text-4xl"
       onClick={props.onClose}>&times;</button>
@@ -72,7 +72,7 @@ function Booking (props) {
         placeholder="Contact Number"
         className="p-2 rounded bg-gray-100 border-0"
       />
-      <button onClick={handleBooking} className="p-2 bg-theme text-white rounded hover:bg-slate-300 ">
+      <button onClick={handleBooking} className="p-2 bg-primary text-white rounded hover:bg-secondary ">
           Book Appointment
       </button>
     </div>

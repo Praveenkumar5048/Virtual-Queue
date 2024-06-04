@@ -9,7 +9,7 @@ function WhyUs() {
   return (
     <div className=" w-full md:py-24 py-12">
       <div className="max-w-7xl mx-auto flex flex-col items-center h-full lg:px-6 lg:justify-center px-3 py-3">
-        <h1 className=" text-2xl md:text-4xl lg:text-5xl font-bold text-theme text-center">
+        <h1 className=" text-2xl md:text-4xl lg:text-5xl font-bold text-primary text-center">
           Why Choose Us
         </h1>
         <p className="text-xs md:text-base md:max-w-2xl mt-3 text-center">

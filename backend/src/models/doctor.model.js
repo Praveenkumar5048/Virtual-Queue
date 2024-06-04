@@ -61,5 +61,23 @@ const doctorSchema = new mongoose.Schema({
     availability: [availabilitySchema]
 }, { timestamps: true });
 
+const AnnouncementSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Doctor',
+        required: true
+    },
+    announcement: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 86400  // 24 hours in seconds
+    }
+})
+
+export const Announcement = mongoose.model("Announcement", AnnouncementSchema);
 export const Doctor = mongoose.model("Doctor", doctorSchema);
 

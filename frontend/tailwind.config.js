@@ -17,10 +17,10 @@ export default {
         }
       },
       colors: {
-        primary: "#02475b",
+        primary: "#0369a1",
         border: "#285430",
         onhover: "#29666a",
-        secondary: "#1a4b4e",
+        secondary: "#38bdf8",
         body: "#f2f2f2",
         underline: "#00b38e",
         newColor: "#A76BC3",

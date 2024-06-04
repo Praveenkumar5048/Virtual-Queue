@@ -1,6 +1,6 @@
 import asyncHandler from "../utilis/asyncHandler.js";
 
-import { Doctor } from "../models/doctor.model.js";
+import { Doctor, Announcement } from "../models/doctor.model.js";
 
 export const RegisterDoctor = asyncHandler(async (req, res, next) => {
     
@@ -52,5 +52,6 @@ export const getDoctorDetails = asyncHandler(async (req, res, next) => {
     if (!doctor) {
         return res.status(404).json({ message: 'Doctor not found' }); 
     }
-    res.status(200).json(doctor);
+    const announcements = await Announcement.find({ userId: doctorId });
+    res.status(200).json({doctor, announcements});
 });

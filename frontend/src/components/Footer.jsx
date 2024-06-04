@@ -6,7 +6,7 @@ function Footer() {
   return (
     <div className=" w-full text-center px-2 ">
 
-      <div className="bg-theme text-white border-t border-onhover max-w-7xl mx-auto flex flex-col items-center py-2 sm:px-6 ">
+      <div className="bg-primary text-white flex flex-col items-center py-2 sm:px-6 ">
 
         {/* footer top */}
         <div className=" flex flex-col items-center justify-evenly px-4 py-4 sm:px-6 lg:px-8 lg:flex-row w-full gap-y-2">

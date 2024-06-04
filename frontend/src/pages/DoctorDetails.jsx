@@ -18,9 +18,9 @@ function DoctorDetails () {
         const fetchDoctorDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:5500/doctor/getInfo/${doctorId}`);
-                setDoctor(response.data);
-                checkAvailability(response.data.availability);
-                if(response.data.userId === user?.userId){
+                setDoctor(response.data.doctor);
+                checkAvailability(response.data.doctor.availability);
+                if(response.data.doctor.userId === user?.userId){
                     setCheckAdmin(true);
                 }
             } catch (error) {
@@ -66,36 +66,60 @@ function DoctorDetails () {
         setBookingForm(false);
     };
 
+    const convertTo12HourFormat = (time) => {
+        const [hours, minutes] = time.split(':');
+        const period = +hours < 12 ? 'AM' : 'PM';
+        const hour = +hours % 12 || 12; // Convert 0 to 12 for midnight
+        return `${hour}:${minutes} ${period}`;
+    };
+
     if (!doctor) return <div>Loading...</div>;
 
     return (
         <>
         <Navbar />
-        <div className="mt-10 flex flex-col sm:flex-row justify-center gap-2">
-            <div className='mb-8'>
-            <div className="bg-white shadow-lg rounded-lg p-4 mb-2 flex items-center">
-                <img className="w-24 h-24 rounded-full mr-4" src="/team-2.jpg" alt={doctor.fullname} />
-                <div>
-                    <h2 className="text-2xl font-extrabold mb-4">Dr. {doctor.fullname}</h2>
-                    <p><span className='font-bold'>Qualification :</span> {doctor.qualifications}</p>
-                    <p><span className='font-bold'>Specialised in :</span> {doctor.specializations}</p>
-                    <p><span className='font-bold'>Hospital Name :</span> {doctor.hospitalname}</p>
-                    <p><span className='font-bold'>Address :</span> {doctor.address}</p>
+        <div className="my-10 flex flex-col sm:flex-row lg:w-3/4 mx-auto ">
+
+            <div className='left-box mb-6 mx-4 lg:w-1/2'>
+                <div className="bg-white shadow-lg rounded-lg p-4 mb-2 flex flex-col">
+                    <div className='flex mb-4'>
+                        <img className="w-24 h-24 rounded-full mr-4" src="/team-2.jpg" alt={doctor.fullname} />
+                        <div>
+                            <h2 className="text-2xl font-extrabold mb-4">Dr. {doctor.fullname}</h2>
+                            <p><span className='font-bold'>Qualification :</span> {doctor.qualifications}</p>
+                            <p><span className='font-bold'>Specialist :</span> {doctor.specializations}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p><span className='font-bold'>Contact  :</span> {doctor.phone}</p>
+                        <p><span className='font-bold'>Hospital  :</span> {doctor.hospitalname}</p>
+                        <p><span className='font-bold'>Address :</span> {doctor.address}</p>
+                    </div>
+                    
+                </div>
+
+                <div className="bg-white shadow-lg rounded-lg p-4">
+                    <span className="flex items-center font-bold text-center ">
+                        Announcements
+                        <img src="/announcement.svg" alt="icon" className="w-8 h-8 m-2" />
+                    </span>
+                    <p>No Announcements so far....</p>
+                    <img src="/add-icon.svg" alt="icon" className="w-8 h-8 cursor-pointer" />
                 </div>
             </div>
-            <div className="bg-white shadow-lg rounded-lg p-4">
-                <h2 className="font-bold text-center min-h-40">Announcements</h2>
-                <p>No Announcements so far....</p>
-            </div>
-            </div>
-
-            <div className="bg-white shadow-md rounded p-4 mb-8">
-                <h3 className="text-xl font-semibold mb-4">Working hours</h3>
+        
+            <div className="right-box bg-white shadow-md rounded p-4 mx-4 mb-6 lg:w-1/2">
+                <span className="flex items-center text-xl font-semibold">
+                Working hours
+                <img src="/working-hours.svg" alt="icon" className="w-8 h-8 cursor-pointer" />
+                </span>
+                
                 {doctor && doctor.availability &&(
                     <ul>
                         {doctor.availability.map((timeSlot, index) => (
                             <li key={index}>
-                                <p>{timeSlot.day} : From: {timeSlot.start} To: {timeSlot.end}</p>
+                                <p>{timeSlot.day}</p>
+                                <p>From: {convertTo12HourFormat(timeSlot.start)} To: {convertTo12HourFormat(timeSlot.end)}</p>
                             </li>
                         ))}
                     </ul>
@@ -103,16 +127,18 @@ function DoctorDetails () {
                 {isAvailable ? (
                         <button
                             type="button"
-                            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
+                            className="text-white bg-secondary hover:bg-primary font-medium rounded-lg text-sm px-5 py-2.5 m-4"
                             onClick={() => {setBookingForm(true)}}
                         >
                             Book
                         </button>
                     ) : (
-                        <p>The Booking is Disabled for Now</p>
+                        <p className='text-center m-4'>Booking is Disabled for Now</p>
                     )}
             </div>
+
         </div>
+
         { bookingForm && <Booking doctorId={doctorId} onBookingSuccess={handleBookingSuccess} onClose={handleBookingClose} />}
         {checkAdmin ? 
           <AdminQueueList bookings={bookings} setBookings={setBookings}/> :

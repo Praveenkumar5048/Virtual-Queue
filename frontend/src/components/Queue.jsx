@@ -24,7 +24,7 @@ function Queue({ bookings, setBookings}) {
   return (
     <>
     
-    <div className="bg-white shadow-md rounded p-4 mb-4 w-1/2 mx-auto border-2 border-blue-400 mt-8">
+    <div className="bg-white shadow-md rounded p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-blue-400 mt-8">
       <h3 className="text-xl font-semibold mb-4 text-center">Today's Virtual Queue</h3>
       <div className="flex items-center justify-center mb-4">
         <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
@@ -32,7 +32,7 @@ function Queue({ bookings, setBookings}) {
         <div className="w-4 h-4 rounded-full bg-red-500 mr-2"></div>
         <p className="text-sm font-semibold">Completed</p>
       </div>
-      <div className="grid grid-cols-10 gap-2 mt-4">
+      <div className="grid grid-cols-5 sm:grid-cols-8 lg:grid-cols-10 gap-2 mt-4">
         {bookings.map((booking, index) => (
           <div
             key={booking._id}

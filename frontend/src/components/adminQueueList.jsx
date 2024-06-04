@@ -30,9 +30,10 @@ const handleMarkCompleted = async (patientId) => {
 }
 
 return (
-    <div className="bg-gray-100 p-4 rounded-lg shadow-md w-3/4 mx-auto">
+    <div className="bg-gray-100 p-4 rounded-lg mt-4 shadow-md mx-4 lg:w-3/4 lg:mx-auto">
         <h3 className="text-xl text-center font-semibold mb-4">Today's Patient Details</h3>
-        <table className="min-w-full bg-white">
+        <div className='overflow-x-auto'>
+        <table className=" min-w-full bg-white">
             <thead>
                 <tr>
                     <th className="py-2 px-4 border-b">#</th>
@@ -51,7 +52,7 @@ return (
                         <td className="py-2 px-4 border-b">{booking.status}</td>
                         <td className="py-2 px-4 border-b text-center">
                             <button
-                                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                                className="px-3 py-1 bg-primary text-white rounded hover:bg-secondary"
                                 onClick={() => handleMarkCompleted(booking._id)}
                             >
                             {booking.status === 'Completed' ? '----' : 'Mark Completed'}   
@@ -60,7 +61,9 @@ return (
                     </tr>
                 ))}
             </tbody>
+            
         </table>
+        </div>
     </div>
 );
 }

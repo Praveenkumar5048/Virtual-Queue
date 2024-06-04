@@ -28,7 +28,7 @@ function AllDoctors() {
     return (
         <div>
             <Navbar />
-            <div className="container mx-auto px-4">
+            <div className=" ">
                 <div className="w-3/4 mx-auto mt-12 mb-8">
                     <input
                         type="text"
@@ -38,27 +38,32 @@ function AllDoctors() {
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                     />
                 </div>
-                <div className="container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {doctors.map(doctor => (
-                        <div key={doctor._id} className="team-item">
-                        <div className="bg-light rounded overflow-hidden">
-                            <div className="h-full">
-                                <img className="h-full object-cover" src="team-2.jpg" alt={doctor.fullname} />
-                            </div>
-                            <div className="flex flex-col justify-between h-full p-4">
-                                <div>
-                                    <h3> Dr. {doctor.fullname}</h3>
-                                    <h6 className="text-primary italic mb-4">{doctor.qualifications}</h6>
-                                    <h6 className="text-primary italic mb-4">{doctor.specializations}</h6>
-                                    <p className="m-0">{doctor.hospitalname}</p>
-                                
-                                </div>
-                               
-                            </div>
-                            <button onClick={() => navigate(`/doctors/${doctor._id}`)}  className="p-2 bg-green-400 rounded-md">Proceed</button>
+                <div className="mx-4 lg:w-3/4 lg:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {doctors.map(doctor => (
+                    <div key={doctor._id} className="border rounded-lg shadow-lg p-2 m-3 bg-white ">
+                        {/* <img className="rounded-tl-lg rounded-tr-lg" src="/Image.png" alt={doctor.fullname} /> */}
+
+                        <div className="flex flex-col p-4">
+                            <h3 className="text-xl font-semibold">Dr. {doctor.fullname}</h3>
+                            <span className="flex items-center">
+                                <img src="/healthcare-occupation.svg" alt="icon" className="w-8 h-8 m-2" />
+                                {doctor.qualifications}
+                            </span>
+                            <span className="flex items-center">
+                                <img src="/healthcare-specialisation.svg" alt="icon" className="w-8 h-8 m-2" />
+                                {doctor.specializations}
+                            </span>
+                            <span className="flex items-center">
+                                <img src="/hospital-building.svg" alt="icon" className="w-8 h-8 m-2" />
+                                {doctor.hospitalname}
+                            </span>
                         </div>
+                        <div className="flex justify-end p-4">
+                            <button onClick={() => navigate(`/doctors/${doctor._id}`)} className="px-4 py-2 bg-secondary rounded-md hover:bg-primary transition duration-300">Proceed</button>
                         </div>
-                    ))}
+                    </div>
+                ))}
+
                 </div>
             </div>
            
