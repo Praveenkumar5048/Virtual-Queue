@@ -14,6 +14,10 @@ function DoctorDetails () {
     const [isAvailable, setIsAvailable] = useState(false); // To check availability of doctor
     const [checkAdmin, setCheckAdmin] = useState(false); // To Checking whether logged user is admin
 
+    const [announcementText, setAnnouncementText] = useState('');
+    const [announcements, setAnnouncements] = useState([]);
+    const [showAddModal, setShowAddModal] = useState(false);
+
     useEffect(() => {
         const fetchDoctorDetails = async () => {
             try {
@@ -72,6 +76,17 @@ function DoctorDetails () {
         const hour = +hours % 12 || 12; // Convert 0 to 12 for midnight
         return `${hour}:${minutes} ${period}`;
     };
+    
+    const addAnnouncement = async () => {
+        try {
+            await axios.post('/api/announcements', { announcement: announcementText });
+            setAnnouncementText('');
+            setShowAddModal(false);
+            fetchAnnouncements();
+        } catch (error) {
+            console.error('Error adding announcement:', error);
+        }
+    };
 
     if (!doctor) return <div>Loading...</div>;
 
@@ -103,9 +118,42 @@ function DoctorDetails () {
                         Announcements
                         <img src="/announcement.svg" alt="icon" className="w-8 h-8 m-2" />
                     </span>
-                    <p>No Announcements so far....</p>
-                    <img src="/add-icon.svg" alt="icon" className="w-8 h-8 cursor-pointer" />
+                    {announcements.length === 0 ? (
+                        <p>No Announcements so far....</p>
+                    ) : (
+                        <ul>
+                            {announcements.map((announcement) => (
+                                <li key={announcement._id}>{announcement.announcement}</li>
+                            ))}
+                        </ul>
+                    )}
+                    <img
+                        src="/add-icon.svg"
+                        alt="icon"
+                        className="w-8 h-8 cursor-pointer"
+                        onClick={() => setShowAddModal(true)}
+                    />
+
+                    {showAddModal && (
+                        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                            <div className="bg-white p-4 rounded-lg">
+                                <textarea
+                                    value={announcementText}
+                                    onChange={(e) => setAnnouncementText(e.target.value)}
+                                    placeholder="Enter today's announcement here"
+                                    className="w-full h-24 resize-none border border-gray-300 rounded mb-2"
+                                />
+                                <button onClick={addAnnouncement} className="bg-primary text-white px-4 py-2 rounded">
+                                    Add Announcement
+                                </button>
+                                <button onClick={() => setShowAddModal(false)} className="ml-2 px-4 py-2 rounded text-gray-600 hover:bg-secondary">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
+
             </div>
         
             <div className="right-box bg-white shadow-md rounded p-4 mx-4 mb-6 lg:w-1/2">

@@ -46,10 +46,10 @@ app.use("/appointment", appointmentRouter);
 
 // WebSocket connection
 io.on('connection', (socket) => {
-    console.log('A user connected');
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
+    // console.log('A user connected');
+    // socket.on('disconnect', () => {
+    //     console.log('A user disconnected');
+    // });
     socket.on('error', (error) => {
         console.error('WebSocket error:', error);
     });
