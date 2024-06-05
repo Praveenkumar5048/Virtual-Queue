@@ -24,7 +24,7 @@ function Queue({ bookings, setBookings}) {
   return (
     <>
     
-    <div className="bg-white shadow-md rounded p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-blue-400 mt-8">
+    <div className="bg-white shadow-md rounded p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-secondary mt-8">
       <h3 className="text-xl font-semibold mb-4 text-center">Today's Virtual Queue</h3>
       <div className="flex items-center justify-center mb-4">
         <div className="w-4 h-4 rounded-full bg-green-500 mr-2"></div>

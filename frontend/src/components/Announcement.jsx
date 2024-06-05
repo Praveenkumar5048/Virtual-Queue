@@ -62,10 +62,10 @@ const Announcement = ({doctorId, checkAdmin}) => {
                             placeholder="Enter today's announcement here"
                             className="w-full h-24 resize-none border border-gray-300 rounded mb-2 p-2"
                         />
-                        <button onClick={addAnnouncement} className="bg-primary text-white px-4 py-2 rounded">
+                        <button onClick={addAnnouncement} className="bg-primary hover:bg-secondary text-white px-4 py-2 rounded">
                             Add Announcement
                         </button>
-                        <button onClick={() => setShowAddModal(false)} className="ml-2 px-4 py-2 rounded text-gray-600 hover:bg-secondary">
+                        <button onClick={() => setShowAddModal(false)} className="ml-2 px-4 py-2 rounded text-gray-600 hover:bg-slate-300">
                             Cancel
                         </button>
                     </div>

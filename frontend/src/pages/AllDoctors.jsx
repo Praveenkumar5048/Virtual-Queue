@@ -59,7 +59,7 @@ function AllDoctors() {
                             </span>
                         </div>
                         <div className="flex justify-end p-4">
-                            <button onClick={() => navigate(`/doctors/${doctor._id}`)} className="px-4 py-2 bg-secondary rounded-md hover:bg-primary transition duration-300">Proceed</button>
+                            <button onClick={() => navigate(`/doctors/${doctor._id}`)} className="px-4 py-2 text-white bg-secondary rounded-md hover:bg-primary transition duration-300">Proceed</button>
                         </div>
                     </div>
                 ))}

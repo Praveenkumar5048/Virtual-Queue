@@ -32,9 +32,9 @@ function Booking (props) {
 
   return (
     <>
-    <div className="relative bg-white shadow-lg rounded-lg p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-blue-400">
+    <div className="relative bg-white shadow-lg rounded-lg p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-secondary">
       <button 
-      className="absolute top-1 right-4 text-gray-700 hover:text-gray-900 text-4xl"
+      className="absolute top-1 right-4 text-gray-700 hover:bg-slate-300 text-4xl"
       onClick={props.onClose}>&times;</button>
       <h3 className="text-xl text-center font-semibold mb-4">Book Appointment</h3>
       <div className="grid grid-cols-1 gap-4">

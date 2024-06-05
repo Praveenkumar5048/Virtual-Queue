@@ -5,7 +5,6 @@ import logo from "/logo.svg";
 
 
 function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   
   const navigate = useNavigate();
@@ -22,26 +21,9 @@ function Navbar() {
     navigate("/");
   };
 
-  const handleScroll = () => {
-    const offset = window.scrollY;
-    
-    if (offset > 200) {
-      setScrolled(false);
-    } else {
-      setScrolled(false);
-    }
-  };
-
-  // sticky navbar on scroll
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div
-      className={`${scrolled
-        ? "sticky top-0 delay-500 ease animate-[stickyNavbar fill-mode-forwards] " : ""} w-full h-[8vh]  bg-primary `}
-    >
+      className=" sticky top-0  w-full h-[8vh]  bg-primary ">
       <div className="max-w-7xl mx-auto flex items-center justify-between lg:px-6  px-3 py-3">
         {/* logo */}
         <div className="flex items-center gap-3">
