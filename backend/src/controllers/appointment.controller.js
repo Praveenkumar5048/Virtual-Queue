@@ -1,5 +1,6 @@
 import asyncHandler from "../utilis/asyncHandler.js";
 import { Appointment } from "../models/appointment.model.js";
+import { Doctor } from "../models/doctor.model.js";
 import { startOfDay, endOfDay } from 'date-fns';
 import { io } from '../../app.js';
 import twilio from 'twilio';
@@ -23,21 +24,22 @@ export const bookAppointment = asyncHandler(async (req, res, next) => {
         });
 
         await appointment.save();
+        const doctorName = await Doctor.findById(doctorId).select('fullname');
+        console.log(doctorName);
 
         // Send SMS via Twilio
         const message = await client.messages.create({
-            body: `Hello ${patientName}, your appointment with doctor ID: ${doctorId} has been booked successfully.`,
+            body: `Hello ${patientName}, your appointment with doctor Dr ${doctorName.fullname} has been booked successfully. Visit the website to veiw virtual queue`,
             to: '+91' + contact,    
             from: process.env.number  
         });
 
         res.status(200).json({ message: 'Appointment booked and SMS sent successfully', appointment });
     } catch (error) {
-        console.error('Error booking appointment or sending SMS:', error);
-        res.status(500).json({ error: 'Failed to book appointment and send SMS' });
+        console.error('Error Sending SMS:', error);
+        res.status(200).json({ error: 'Booked successfully but Failed to send SMS' });
     }
 });
-
 
 export const updateAppointment = asyncHandler(async (req, res, next) => {
 

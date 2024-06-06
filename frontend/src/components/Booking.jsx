@@ -19,7 +19,9 @@ function Booking (props) {
           doctorId: props.doctorId,
           ...patientDetails,
         });
-        props.onBookingSuccess();
+        if(response.status === 200){
+          props.onBookingSuccess();
+        }
     } catch (error) {
         console.error('Error booking appointment:', error);
     }
