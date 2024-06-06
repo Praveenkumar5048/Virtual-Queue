@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaPhone } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from "react-router";
-import { Navbar } from "../import-export/ImportExport";
+import { Navbar, Loader } from "../import-export/ImportExport";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
 
   const [formData, setFormData] = useState({
     username: '',
@@ -31,14 +32,23 @@ const SignUp = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoader(true);
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5500/user/register', formData);
+      setLoader(false);
       navigate("/login");
     } catch (error) {
+      setLoader(false);
       console.error(error);
     }
   };
+  
+  if(loader){
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <>
@@ -106,7 +116,7 @@ const SignUp = () => {
               {formData.showPassword ? <FaEyeSlash className="h-6 w-6" /> : <FaEye className="h-6 w-6" />}
             </span>
           </div>
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded w-full mb-4">Sign Up</button>
+          <button type="submit" className="bg-secondary hover:bg-primary text-white py-3 px-6 rounded w-full mb-4">Sign Up</button>
         </form>
         <p className="text-center">Already have an account? <a href="/login" className="text-blue-500 hover:text-blue-700">Login</a></p>
       </div>

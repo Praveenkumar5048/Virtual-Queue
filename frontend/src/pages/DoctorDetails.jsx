@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Booking, Queue, AdminQueueList, Announcement } from "../import-export/ImportExport";
+import { Navbar, Booking, Queue, AdminQueueList, Announcement, Loader } from "../import-export/ImportExport";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function DoctorDetails () {
     
     const user = JSON.parse(localStorage.getItem('user'));
+    const [loader, setLoader] = useState(true);
 
     const { doctorId } = useParams();
     const [doctor, setDoctor] = useState(null); // To store doctor details
@@ -24,7 +25,9 @@ function DoctorDetails () {
                 if(response.data.userId === user?.userId){
                     setCheckAdmin(true);
                 }
+                setLoader(false);
             } catch (error) {
+                setLoader(false);
                 console.error('Error fetching doctor details:', error);
             }
         };
@@ -74,8 +77,11 @@ function DoctorDetails () {
         return `${hour}:${minutes} ${period}`;
     };
     
-
-    if (!doctor) return <div>Loading...</div>;
+    if(loader){
+        return (
+          <Loader />
+        );
+    }
 
     return (
         <>

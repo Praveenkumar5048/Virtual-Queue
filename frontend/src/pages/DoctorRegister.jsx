@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineUser, AiOutlineMail, AiFillPhone } from 'react-icons/ai';
 import { GrBook, GrAchievement } from "react-icons/gr";
 import { FaRegAddressBook, FaRegHospital } from "react-icons/fa";
-import {Navbar} from "../import-export/ImportExport";
+import {Navbar, Loader} from "../import-export/ImportExport";
 
 function DoctorRegister() {
 
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate();
+    const [loader, setLoader] = useState();
+
     const [formData, setFormData] = useState({
         userId: user?.userId,
         fullname: '',
@@ -46,6 +48,7 @@ function DoctorRegister() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoader(true);
         const selectedAvailability = availability
             .filter(slot => slot.available && slot.start && slot.end)
             .map(slot => ({ day: slot.day, start: slot.start, end: slot.end }));
@@ -55,12 +58,19 @@ function DoctorRegister() {
                 ...formData,
                 availability: selectedAvailability
             });
-            alert('Doctor registered successfully!');
+            setLoader(false);
             navigate('/');
         } catch (error) {
+            setLoader(false);
             console.error('Error registering doctor:', error);
         }
     };
+
+    if(loader){
+        return (
+          <Loader />
+        );
+    }
 
     return (
       <>
@@ -74,31 +84,31 @@ function DoctorRegister() {
                         <label htmlFor="fullname" className=" font-bold mb-2 flex items-center">
                             <AiOutlineUser className="mr-2" /> Full Name
                         </label>
-                        <input type="text" id="fullname" name="fullname" value={formData.fullname} onChange={handleChange} required placeholder="Dr. XYZ" className="rounded p-1 mb-2 w-full sm:w-96" />
+                        <input type="text" id="fullname" name="fullname" value={formData.fullname} onChange={handleChange} required placeholder="Dr. XYZ" className="rounded p-1 mb-2 w-full sm:w-96 text-black" />
                     </div>
                     <div>
                         <label htmlFor="hospital" className="font-bold mb-2 flex items-center">
                             <FaRegHospital className="mr-2" /> Hospital Name
                         </label>
-                        <input type="text" id="hospital" name="hospitalname" value={formData.hospitalname} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96" />
+                        <input type="text" id="hospital" name="hospitalname" value={formData.hospitalname} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96 text-black" />
                     </div>
                     <div>
                         <label htmlFor="email" className=" font-bold mb-2 flex items-center">
                             <AiOutlineMail className="mr-2" /> Email Address
                         </label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96" />
+                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96 text-black" />
                     </div>
                     <div>
                         <label htmlFor="phone" className=" font-bold mb-2 flex items-center">
                             <AiFillPhone className="mr-2" /> Contact No
                         </label>
-                        <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleChange} required minLength="10" maxLength="10" className="rounded p-1 mb-2 w-full sm:w-96" />
+                        <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleChange} required minLength="10" maxLength="10" className="rounded p-1 mb-2 w-full sm:w-96 text-black" />
                     </div>
                     <div>
                         <label htmlFor="address" className=" font-bold mb-2 flex items-center">
                             <FaRegAddressBook className="mr-2" /> Hospital Address
                         </label>
-                        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96" />
+                        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96 text-black" />
                     </div>
                     <div>
                         <label htmlFor="gender" className=" font-bold mb-2 flex items-center">
@@ -121,13 +131,13 @@ function DoctorRegister() {
                         <label htmlFor="specializations" className="font-bold mb-2 flex items-center">
                             <GrAchievement className="mr-2" /> Specialization
                         </label>
-                        <input type="text" id="specializations" name="specializations" value={formData.specializations} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96" placeholder="e.g., Cardiology, Neurology" />
+                        <input type="text" id="specializations" name="specializations" value={formData.specializations} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96 text-black" placeholder="e.g., Cardiology, Neurology" />
                     </div>
                     <div>
                         <label htmlFor="qualifications" className= "font-bold mb-2 flex items-center">
                             <GrBook className="mr-2" /> Qualifications
                         </label>
-                        <textarea id="qualifications" name="qualifications" value={formData.qualifications} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96"></textarea>
+                        <textarea id="qualifications" name="qualifications" value={formData.qualifications} onChange={handleChange} required className="rounded p-1 mb-2 w-full sm:w-96 text-black"></textarea>
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-2">Available On</h3>

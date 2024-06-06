@@ -53,7 +53,7 @@ export const login = asyncHandler(async (req, res, next) => {
              console.error(err.message);
              return res.status(500).json({ msg: 'Error generating token' });
            }
-           res.json({ token, user : {userId : user._id} });
+           res.status(200).json({msg: 'Login Successful',  token, user : {userId : user._id} });
          });
 
       } catch (err) {

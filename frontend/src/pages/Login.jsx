@@ -2,11 +2,12 @@ import React, { useState, useContext } from 'react';
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../import-export/ImportExport";
+import { Navbar, Loader } from "../import-export/ImportExport";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
- 
+  const [loader, setLoader] = useState(false);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -31,18 +32,45 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:5500/user/login", formData);
-    const { token, user } = response.data; 
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    try{
+      setLoader(true);
+      const response = await axios.post("http://localhost:5500/user/login", formData);
+      const { token, user } = response.data; 
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      setLoader(false);
+      navigate("/");
+    } catch(error){
+      setLoader(false);
+      if (error.response && error.response.data && error.response.data.msg === "Invalid credentials") {
+        toast.warning("Invalid Credentials!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      } else {
+        console.log("An error occurred:", error);
+      }
+    }
     
-    navigate("/");
   };
-
+  if(loader){
+    return (
+      <Loader />
+    );
+  }
+  
   return (
     <>
     <Navbar />
-    <div className="bg-gray-100 min-h-screen flex justify-center items-center">
+    <div className="mt-10 flex justify-center items-center">
+    <ToastContainer />
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl text-center mb-8">Login</h2>
         <form onSubmit={handleSubmit}>
@@ -77,7 +105,7 @@ const Login = () => {
               {formData.showPassword ? <FaEyeSlash className="h-6 w-6" /> : <FaEye className="h-6 w-6" />}
             </span>
           </div>
-          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded w-full mb-4">Login</button>
+          <button type="submit" className="bg-secondary hover:bg-primary text-white py-3 px-6 rounded w-full mb-4">Login</button>
         </form>
         <p className="text-center">Don't have an account? <a href="/signup" className="text-blue-500 hover:text-blue-700">Sign Up</a></p>
       </div>

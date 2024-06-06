@@ -8,6 +8,7 @@ import Booking from "../components/Booking.jsx";
 import Queue from "../components/Queue.jsx";
 import Announcement from "../components/Announcement.jsx";
 import AdminQueueList from "../components/adminQueueList.jsx";
+import Loader from '../components/loader.jsx';
 
 // Pages
 import Home from "../pages/Home.jsx";
@@ -19,4 +20,4 @@ import DoctorRegister from "../pages/DoctorRegister.jsx";
 import DoctorDetails from "../pages/DoctorDetails.jsx";
 
 export {Navbar, Footer, Home, Hero, WhyUs, GetInTouch, Queue,
-    Appointment, Booking, AllDoctors, SignUp, Login, DoctorRegister, DoctorDetails, AdminQueueList, Announcement };
+    Appointment, Booking, AllDoctors, SignUp, Login, DoctorRegister, DoctorDetails, AdminQueueList, Announcement, Loader };

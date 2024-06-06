@@ -24,7 +24,7 @@ function AllDoctors() {
         }
         getAllDoctors();
     }, []);
-
+    
     return (
         <div>
             <Navbar />
