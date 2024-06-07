@@ -25,8 +25,7 @@ export const bookAppointment = asyncHandler(async (req, res, next) => {
 
         await appointment.save();
         const doctorName = await Doctor.findById(doctorId).select('fullname');
-        console.log(doctorName);
-
+    
         // Send SMS via Twilio
         const message = await client.messages.create({
             body: `Hello ${patientName}, your appointment with doctor Dr ${doctorName.fullname} has been booked successfully. Visit the website to veiw virtual queue`,

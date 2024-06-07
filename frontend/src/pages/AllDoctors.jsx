@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import { Navbar } from "../import-export/ImportExport";
 import axios from "axios";
+import '../../public/style-sheet/buttons.css';
 
 function AllDoctors() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -59,7 +60,7 @@ function AllDoctors() {
                             </span>
                         </div>
                         <div className="flex justify-end p-4">
-                            <button onClick={() => navigate(`/doctors/${doctor._id}`)} className="px-4 py-2 text-white bg-secondary rounded-md hover:bg-primary transition duration-300">Proceed</button>
+                            <button onClick={() => navigate(`/doctors/${doctor._id}`)} className="button2">Proceed</button>
                         </div>
                     </div>
                 ))}

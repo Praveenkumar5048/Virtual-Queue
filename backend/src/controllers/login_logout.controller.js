@@ -36,13 +36,13 @@ export const login = asyncHandler(async (req, res, next) => {
         // Check if user exists
         let user = await User.findOne({ email });
         if (!user) {
-          return res.status(400).json({ msg: 'Invalid credentials' });
+          return res.status(401).json({ msg: 'Invalid credentials' });
         }
         // Check password
         
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-          return res.status(400).json({ msg: 'Invalid credentials' });
+          return res.status(401).json({ msg: 'Invalid credentials' });
         }
       
          // Create JWT token

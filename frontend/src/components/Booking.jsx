@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import {Loader} from '../import-export/ImportExport'
+import '../../public/style-sheet/buttons.css';
 
 function Booking (props) {
 
   const user = JSON.parse(localStorage.getItem('user'));
+  const [loader, setLoader] = useState(false);
 
   const [patientDetails, setPatientDetails] = useState({
     patientName: '',
@@ -14,15 +17,18 @@ function Booking (props) {
   });
 
   const handleBooking = async () => {
+    setLoader(true);
     try {
         const response = await axios.post('http://localhost:5500/appointment/bookAppointment', {
           doctorId: props.doctorId,
           ...patientDetails,
         });
         if(response.status === 200){
+          setLoader(false);
           props.onBookingSuccess();
         }
     } catch (error) {
+        setLoader(false);
         console.error('Error booking appointment:', error);
     }
   };
@@ -31,7 +37,11 @@ function Booking (props) {
     const { name, value } = e.target;
     setPatientDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
-
+  if(loader){
+    return (
+      <Loader />
+    );
+  }
   return (
     <>
     <div className="relative bg-white shadow-lg rounded-lg p-4 mx-4 lg:w-3/4 lg:mx-auto border-2 border-secondary">
@@ -74,7 +84,7 @@ function Booking (props) {
         placeholder="Contact Number"
         className="p-2 rounded bg-gray-100 border-0"
       />
-      <button onClick={handleBooking} className="p-2 bg-primary text-white rounded hover:bg-secondary ">
+      <button onClick={handleBooking} className="button2 ">
           Book Appointment
       </button>
     </div>

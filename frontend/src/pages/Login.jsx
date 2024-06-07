@@ -42,7 +42,8 @@ const Login = () => {
       navigate("/");
     } catch(error){
       setLoader(false);
-      if (error.response && error.response.data && error.response.data.msg === "Invalid credentials") {
+      console.log("Error response:", error.response.data);
+      if (error.response && error.response.data && error.response.data.msg === 'Invalid credentials') {
         toast.warning("Invalid Credentials!", {
           position: "top-right",
           autoClose: 5000,
