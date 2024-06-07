@@ -12,7 +12,7 @@ import Loader from '../components/loader.jsx';
 
 // Pages
 import Home from "../pages/Home.jsx";
-import Appointment from "../pages/Appointment.jsx";
+import MyAppointments from "../pages/MyAppointments.jsx";
 import AllDoctors from "../pages/AllDoctors.jsx";
 import SignUp from "../pages/Signup.jsx"
 import Login from "../pages/Login.jsx"
@@ -20,4 +20,4 @@ import DoctorRegister from "../pages/DoctorRegister.jsx";
 import DoctorDetails from "../pages/DoctorDetails.jsx";
 
 export {Navbar, Footer, Home, Hero, WhyUs, GetInTouch, Queue,
-    Appointment, Booking, AllDoctors, SignUp, Login, DoctorRegister, DoctorDetails, AdminQueueList, Announcement, Loader };
+    MyAppointments, Booking, AllDoctors, SignUp, Login, DoctorRegister, DoctorDetails, AdminQueueList, Announcement, Loader };
