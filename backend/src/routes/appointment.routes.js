@@ -1,5 +1,5 @@
 import express from "express";
-import { bookAppointment, getAllAppointments, updateAppointment} from "../controllers/appointment.controller.js";
+import { bookAppointment, getAllAppointments, updateAppointment, getAllUserAppointments} from "../controllers/appointment.controller.js";
 
 const router = express.Router();
 
@@ -7,5 +7,6 @@ const router = express.Router();
 router.post("/bookAppointment", bookAppointment);
 router.get("/getQueueList/:doctorId", getAllAppointments);
 router.put("/update/patient/status/:patientId", updateAppointment);
+router.get("/getAllUserAppointments/:userId", getAllUserAppointments);
 
 export default router;

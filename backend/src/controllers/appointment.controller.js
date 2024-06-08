@@ -66,3 +66,14 @@ export const getAllAppointments = asyncHandler(async (req, res, next) => {
     
     res.status(200).json(appointments);
 });
+
+export const getAllUserAppointments = asyncHandler(async (req, res, next) => {
+    
+    const userId = req.params.userId;
+    try {
+        const userAppointments = await Appointment.find({ bookedBy: userId });
+        res.status(200).json(userAppointments);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to retrieve user appointments", error: error.message });
+    }
+});
