@@ -3,7 +3,7 @@ import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Navbar, Loader } from "../import-export/ImportExport";
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -39,25 +39,14 @@ const Login = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       setLoader(false);
+      toast.success("logged in successfully!");
       navigate("/");
     } catch(error){
       setLoader(false);
-      console.log("Error response:", error.response.data);
-      if (error.response && error.response.data && error.response.data.msg === 'Invalid credentials') {
-        toast.warning("Invalid Credentials!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      } else {
-        console.log("An error occurred:", error);
-      }
+      toast.error("Failed To Login");
+      setFormData({email: '', password: '', showPassword: false});
+      console.log("Error response:", error);
+  
     }
     
   };
@@ -71,7 +60,7 @@ const Login = () => {
     <>
     <Navbar />
     <div className="mt-10 flex justify-center items-center">
-    <ToastContainer />
+    
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl text-center mb-8">Login</h2>
         <form onSubmit={handleSubmit}>

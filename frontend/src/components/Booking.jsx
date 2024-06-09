@@ -1,11 +1,15 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {Loader} from '../import-export/ImportExport'
+import {Loader, LoginPrompt} from '../import-export/ImportExport'
+import {toast} from 'react-hot-toast';
 import '../../public/style-sheet/buttons.css';
 
 function Booking (props) {
 
   const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) {
+      return <LoginPrompt />;
+  }
   const [loader, setLoader] = useState(false);
 
   const [patientDetails, setPatientDetails] = useState({
@@ -25,10 +29,12 @@ function Booking (props) {
         });
         if(response.status === 200){
           setLoader(false);
+          toast.success("Booked Successfully");
           props.onBookingSuccess();
         }
     } catch (error) {
         setLoader(false);
+        toast.error("Error in Booking");
         console.error('Error booking appointment:', error);
     }
   };

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {useNavigate} from "react-router";
+import {toast} from 'react-hot-toast';
 import logo from "/logo.svg";
 
 
@@ -18,6 +19,7 @@ function Navbar() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setLoggedIn(false);
+    toast.success("Logged out Successfully");
     navigate("/");
   };
 

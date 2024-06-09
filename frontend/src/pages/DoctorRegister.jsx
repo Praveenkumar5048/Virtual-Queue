@@ -5,6 +5,7 @@ import { AiOutlineUser, AiOutlineMail, AiFillPhone } from 'react-icons/ai';
 import { GrBook, GrAchievement } from "react-icons/gr";
 import { FaRegAddressBook, FaRegHospital } from "react-icons/fa";
 import {Navbar, Loader} from "../import-export/ImportExport";
+import {toast} from 'react-hot-toast';
 import '../../public/style-sheet/checkbox.css';
 import '../../public/style-sheet/buttons.css';
 
@@ -61,9 +62,11 @@ function DoctorRegister() {
                 availability: selectedAvailability
             });
             setLoader(false);
+            toast.success("Doctor Registered Successfully");
             navigate('/');
         } catch (error) {
             setLoader(false);
+            toast.error("Error in Registering Doctor");
             console.error('Error registering doctor:', error);
         }
     };

@@ -9,6 +9,7 @@ import Queue from "../components/Queue.jsx";
 import Announcement from "../components/Announcement.jsx";
 import AdminQueueList from "../components/adminQueueList.jsx";
 import Loader from '../components/loader.jsx';
+import LoginPrompt from '../components/loginPrompt.jsx';
 
 // Pages
 import Home from "../pages/Home.jsx";
@@ -20,4 +21,5 @@ import DoctorRegister from "../pages/DoctorRegister.jsx";
 import DoctorDetails from "../pages/DoctorDetails.jsx";
 
 export {Navbar, Footer, Home, Hero, WhyUs, GetInTouch, Queue,
-    MyAppointments, Booking, AllDoctors, SignUp, Login, DoctorRegister, DoctorDetails, AdminQueueList, Announcement, Loader };
+    MyAppointments, Booking, AllDoctors, SignUp, Login, DoctorRegister,
+     DoctorDetails, AdminQueueList, Announcement, Loader, LoginPrompt };

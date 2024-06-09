@@ -3,6 +3,7 @@ import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaPhone } from 'react-ic
 import axios from 'axios';
 import { useNavigate } from "react-router";
 import { Navbar, Loader } from "../import-export/ImportExport";
+import {toast} from "react-hot-toast";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ const SignUp = () => {
       navigate("/login");
     } catch (error) {
       setLoader(false);
+      toast.error("Failed to Register");
+      setFormData({username: '', email: '', phone:'', password: '', showPassword: false});
       console.error(error);
     }
   };

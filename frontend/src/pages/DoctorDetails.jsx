@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navbar, Booking, Queue, AdminQueueList, Announcement, Loader } from "../import-export/ImportExport";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import {toast} from 'react-hot-toast';
 import '../../public/style-sheet/buttons.css';
 
 function DoctorDetails () {
@@ -62,7 +63,13 @@ function DoctorDetails () {
         }
         setIsAvailable(false);
     };
-
+    const handleBookingClick = () => {
+        if (!user) {
+           toast.error("Login to Book!!");  
+        }else{
+            setBookingForm(true);
+        }
+    }
     const handleBookingSuccess = () => {
         setBookingForm(false); 
     };
@@ -133,7 +140,7 @@ function DoctorDetails () {
                         <button
                             type="button"
                             className="button2 mt-4"
-                            onClick={() => {setBookingForm(true)}}
+                            onClick={handleBookingClick}
                         >
                             Book
                         </button>

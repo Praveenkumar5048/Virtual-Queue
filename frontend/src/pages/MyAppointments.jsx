@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-import { Navbar, Loader } from "../import-export/ImportExport";
+import { Navbar, Loader, LoginPrompt } from "../import-export/ImportExport";
 import axios from "axios";
+import {toast} from 'react-hot-toast';
 import '../../public/style-sheet/token.css';
 
 function MyAppointments() {
     
     const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) {
+        return <LoginPrompt />;
+    }
+
     const [tokens, setTokens] = useState([]);
     const [loader, setLoader] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getAllAppointments = async () => {
@@ -17,12 +23,14 @@ function MyAppointments() {
                 setTokens(response.data);
                 setLoader(false);
               } catch (error) {
+                toast.error("Unexpected Error");
+                navigate("/");
                 console.error("Error fetching tokens:", error);
               }
         }
         getAllAppointments();
     }, []);
-
+    
     if(loader){
         return (
         <Loader />
