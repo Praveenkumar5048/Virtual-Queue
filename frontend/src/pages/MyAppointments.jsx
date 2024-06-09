@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
-import { Navbar } from "../import-export/ImportExport";
+import { Navbar, Loader } from "../import-export/ImportExport";
 import axios from "axios";
 import '../../public/style-sheet/token.css';
 
@@ -8,12 +8,14 @@ function MyAppointments() {
     
     const user = JSON.parse(localStorage.getItem('user'));
     const [tokens, setTokens] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         const getAllAppointments = async () => {
             try {
                 const response = await axios.get(`http://localhost:5500/appointment/getAllUserAppointments/${user?.userId}`);
                 setTokens(response.data);
+                setLoader(false);
               } catch (error) {
                 console.error("Error fetching tokens:", error);
               }
@@ -21,17 +23,23 @@ function MyAppointments() {
         getAllAppointments();
     }, []);
 
+    if(loader){
+        return (
+        <Loader />
+        );
+    }
+
     return (
         <>
            <Navbar />
            <div className="mx-4 lg:w-3/4 lg:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-                {tokens.map((token, index) => (
+                { tokens.length > 0 ? (tokens.map((token, index) => (
                    <div key={index} className="bg-white p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
                         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">Appointment Ticket</h2>
                         <div className="border-b-2 border-gray-200 mb-4 pb-2">
                             <p className="text-gray-700 text-lg"><span className="font-semibold">Patient Name:</span> {token.patientName}</p>
-                            <p className="text-gray-700 text-lg"><span className="font-semibold">Doctor Name:</span> {token.doctorName}</p>
-                            <p className="text-gray-700 text-lg"><span className="font-semibold">Date:</span> {token.date}</p>
+                            <p className="text-gray-700 text-lg"><span className="font-semibold">Doctor Name:</span> Dr. {token.doctorName}</p>
+                            <p className="text-gray-700 text-lg"><span className="font-semibold">Date:</span> {token.date.slice(0, 10)}</p>
                         </div>
                         <div className="flex justify-between items-center mt-4">
                             <div className="bg-blue-100 text-secondary font-bold text-lg px-4 py-2 rounded-full">
@@ -45,7 +53,12 @@ function MyAppointments() {
                             </div>
                         </div>
                     </div>
-                ))}
+                ))) : (
+                    <div className='text-center text-xl mt-10 text-black/60 font-bold'>
+                        <h2>No Appointments Booked so far..</h2>
+                    </div>
+                )
+                }
                 
             </div>
         </>

@@ -68,11 +68,21 @@ export const getAllAppointments = asyncHandler(async (req, res, next) => {
 });
 
 export const getAllUserAppointments = asyncHandler(async (req, res, next) => {
-    
     const userId = req.params.userId;
     try {
+        // Fetch user appointments
         const userAppointments = await Appointment.find({ bookedBy: userId });
-        res.status(200).json(userAppointments);
+        
+        // Fetch doctor details for each appointment
+        const appointmentsWithDoctorDetails = await Promise.all(userAppointments.map(async (appointment) => {
+            const doctor = await Doctor.findById(appointment.doctorId);
+            return {
+                ...appointment._doc,
+                doctorName: doctor ? doctor.fullname : 'Unknown Doctor'
+            };
+        }));
+        
+        res.status(200).json(appointmentsWithDoctorDetails);
     } catch (error) {
         res.status(500).json({ message: "Failed to retrieve user appointments", error: error.message });
     }
