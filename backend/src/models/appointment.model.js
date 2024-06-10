@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+const counterSchema = new mongoose.Schema({
+    doctorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Doctor',
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
+    count: {
+        type: Number,
+        default: 0
+    }
+});
+
 const appointmentSchema = new mongoose.Schema({
     doctorId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -38,7 +54,31 @@ const appointmentSchema = new mongoose.Schema({
         required: true,
         enum: ["Pending", "CheckedIn", "Completed"],
         default: "Pending"
+    },
+    queueNumber: {
+        type: Number,
+        required: true,
     }
 }, { timestamps: true });
 
+appointmentSchema.pre('save', async function(next) {
+    
+    if (this.isNew) {
+        console.log('New appointment, setting queue number');
+        const todayDate = new Date();
+        todayDate.setHours(0, 0, 0, 0); 
+        // Find and update the counter for the doctor and date
+        const counter = await Counter.findOneAndUpdate(
+            { doctorId: this.doctorId, date: todayDate },
+            { $inc: { count: 1 } },
+            { new: true, upsert: true } // Create the document if it doesn't exist
+        );
+        
+        // Assign the queue number
+        this.queueNumber = counter.count;
+    }
+    next();
+});
+
 export const Appointment = mongoose.model("appointment", appointmentSchema); 
+export const Counter = mongoose.model("counter", counterSchema);

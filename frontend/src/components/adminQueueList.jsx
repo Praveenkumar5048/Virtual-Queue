@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import {toast} from 'react-hot-toast';
 
 const socket = io.connect("http://localhost:5500");
 
@@ -23,7 +24,7 @@ useEffect(() => {
 const handleMarkCompleted = async (patientId) => {
    try{
      const response = await axios.put(`http://localhost:5500/appointment/update/patient/status/${patientId}`);
-     alert('Appointment marked as completed successfully!');
+     toast.success("Token marked completed");
    }catch(error){
       console.log(error);
    }

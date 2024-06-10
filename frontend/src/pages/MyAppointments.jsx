@@ -51,7 +51,7 @@ function MyAppointments() {
                         </div>
                         <div className="flex justify-between items-center mt-4">
                             <div className="bg-blue-100 text-secondary font-bold text-lg px-4 py-2 rounded-full">
-                                Queue No: {token.queueNumber} 50
+                                Queue No: {token.queueNumber}
                             </div>
                             <div className={`text-lg px-4 py-2 rounded-full font-bold ${
                                 token.status === 'Completed' ? 'bg-green-100 text-green-600' : 
