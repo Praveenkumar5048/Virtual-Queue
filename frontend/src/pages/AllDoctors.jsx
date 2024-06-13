@@ -41,8 +41,8 @@ function AllDoctors() {
                 </div>
                 <div className="mx-4 lg:w-3/4 lg:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {doctors.map(doctor => (
-                    <div key={doctor._id} className="border rounded-lg shadow-lg p-2 m-3 bg-white ">
-                        {/* <img className="rounded-tl-lg rounded-tr-lg" src="/Image.png" alt={doctor.fullname} /> */}
+                    <div key={doctor._id} className="border rounded-md shadow-lg shadow-secondary p-2 m-3 bg-white ">
+                        <img className="rounded-tl-lg rounded-tr-lg" src="/Image.png" alt={doctor.fullname} />
 
                         <div className="flex flex-col p-4">
                             <h3 className="text-xl font-semibold">Dr. {doctor.fullname}</h3>

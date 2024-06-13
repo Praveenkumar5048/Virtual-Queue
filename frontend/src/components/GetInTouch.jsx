@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import {Feedback} from '../import-export/ImportExport'
 import '../../public/style-sheet/buttons.css';
 
 function GetInTouch() {
@@ -29,7 +30,7 @@ function GetInTouch() {
     <div className="w-full px-2">
       <div className=" max-w-7xl mx-auto flex flex-col items-center px-2 md:px-4">
 
-        <h1 className="my-4 text-2xl md:text-4xl font-bold tracking-tight text-primary text-center">
+        <h1 className="my-4 text-3xl md:text-4xl font-bold tracking-tight text-primary text-center">
           Get In Touch With Us
         </h1>
 
@@ -57,10 +58,10 @@ function GetInTouch() {
                 </div>
               </div>
             </div>
-            <div className="md:w-1/2 bg-white flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
-              <h2 className="text-gray-900 text-lg mb-1 font-medium title-font">Feedback</h2>
+            <div className="md:w-1/2 bg-white flex flex-col p-6 mt-5 rounded-md">
+              <h2 className="text-secondary font-semibold text-xl mb-1 ">Feedback</h2>
               <form onSubmit={handleSubmit}>
-                <div className="relative mb-4">
+                <div className=" mb-4">
                   <label htmlFor="firstName" className="leading-7 text-sm text-gray-600">First Name</label>
                   <input
                     type="text"
@@ -68,11 +69,11 @@ function GetInTouch() {
                     name="firstName"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className=" "
                   />
                 </div>
                 
-                <div className="relative mb-4">
+                <div className=" mb-4">
                   <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
                   <input
                     type="email"
@@ -80,10 +81,10 @@ function GetInTouch() {
                     name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className=" "
                   />
                 </div>
-                <div className="relative mb-4">
+                <div className=" mb-4">
                   <label htmlFor="phone" className="leading-7 text-sm text-gray-600">Phone</label>
                   <input
                     type="text"
@@ -91,21 +92,22 @@ function GetInTouch() {
                     name="phone"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    className=""
                   />
                 </div>
-                <div className="relative mb-4">
+                <div className="border rounded-md border-dashed border-secondary mb-4">
                   <label htmlFor="message" className="leading-7 text-sm text-gray-600">Message</label>
                   <textarea
                     id="message"
                     name="message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    className="w-full bg-white rounded "
                   ></textarea>
                 </div>
                 <button type="submit" className="button2">Submit</button>
               </form>
+              <Feedback />
             </div>
           </div>
         </section>

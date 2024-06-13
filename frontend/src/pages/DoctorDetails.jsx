@@ -94,7 +94,7 @@ function DoctorDetails () {
     return (
         <>
         <Navbar />
-        <div className="my-10 flex flex-col sm:flex-row lg:w-3/4 mx-auto ">
+        <div className="my-10 rounded-md p-5 flex flex-col sm:flex-row lg:w-3/4 mx-auto bg-secondary">
 
             <div className='left-box mb-6 mx-4 lg:w-1/2'>
                 <div className="bg-white shadow-lg rounded-lg p-4 mb-2 flex flex-col">
