@@ -71,3 +71,25 @@ export const addAnnouncement = asyncHandler(async (req, res, next) =>{
     return res.status(201).json({ message: "Announcement created successfully"});
 
 })
+
+export const search = asyncHandler(async (req, res, next) =>{
+    const { query, specializations } = req.query;
+    
+    let filter = {};
+
+    if (query && query !== "") {
+        filter.fullname = new RegExp(query, 'i');
+    }
+
+    if (specializations && specializations !== "All") {
+        filter.specializations = new RegExp(specializations, 'i');
+    }
+    
+    try {
+        const doctors = await Doctor.find(filter);
+        res.status(200).json(doctors);
+    } catch (error) {
+        console.error("Error fetching doctors:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+})

@@ -2,43 +2,71 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import { Navbar } from "../import-export/ImportExport";
 import axios from "axios";
+import { GoChevronDown } from "react-icons/go";
 import '../../public/style-sheet/buttons.css';
 
 function AllDoctors() {
     const [searchQuery, setSearchQuery] = useState("");
+    const [specializationQuery, setSpecializationQuery] = useState("All");
     const [doctors, setDoctors] = useState([]);
     const navigate = useNavigate();
-    const handleSearch = (e) => {
-        setSearchQuery(e.target.value);
-        // Perform search filtering based on searchQuery
-        // Example: You can filter doctors based on name, specialization, etc.
+
+    const handleSearchSpecialisation = async () => {
+        
+        try {
+            const response = await axios.get(`http://localhost:5500/doctor/search?query=${searchQuery}`);
+            setDoctors(response.data);
+        } catch (error) {
+            console.error("Error fetching doctors:", error);
+        }
     };
 
     useEffect(() => {
-        const getAllDoctors = async () => {
+        const getFilteredDoctors = async () => {
             try {
-                const response = await axios.get("http://localhost:5500/doctor/getAllDoctors");
+                let url = `http://localhost:5500/doctor/search?`;
+                if (searchQuery !== "") {
+                    url += `query=${searchQuery}&`;
+                }
+                if (specializationQuery !== "All") {
+                    url += `specializations=${specializationQuery}`;
+                }
+
+                const response = await axios.get(url);
                 setDoctors(response.data);
-              } catch (error) {
+            } catch (error) {
                 console.error("Error fetching doctors:", error);
-              }
-        }
-        getAllDoctors();
-    }, []);
+            }
+        };
+
+        getFilteredDoctors();
+    }, [searchQuery, specializationQuery]);
     
     return (
         <div>
             <Navbar />
             <div className=" ">
-                <div className="w-3/4 mx-auto mt-12 mb-8">
-                    <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={handleSearch}
-                        placeholder="Search for doctors..."
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-                    />
+                {/* search bar */}
+
+                <div className="w-3/4 mx-auto my-8">
+                    
+                    <div class="flex w-full justify-center">
+                        <select value={specializationQuery}
+                        onChange={(e) => setSpecializationQuery(e.target.value)} className='bg-slate-100 rounded-tl-lg rounded-bl-lg cursor-pointer'>
+                            <option value="All" className="p-2">All</option>
+                            <option value="Cardiology" className="p-2">Cardiology</option>
+                            <option value="Pediatrics" className="p-2">Pediatrics</option>
+                            <option value="Neurology" className="p-2">Neurology</option>
+                            <option value="Dermatology" className="p-2">Dermatology</option>
+                            <option value="Orthopedics" className="p-2">Orthopedics</option>
+                        </select>
+                        <input type="text"  onChange={(e) => setSearchQuery(e.target.value)}  value={searchQuery} className="bg-white pl-2 text-base font-semibold w-3/4" placeholder="search doctors" />
+                        <button type="submit" className="bg-secondary p-2 rounded-tr-lg rounded-br-lg text-white font-semibold">Search</button>
+                    </div>
+                
                 </div>
+
+                {/* Doctors list */}
                 <div className="mx-4 lg:w-3/4 lg:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {doctors.map(doctor => (
                     <div key={doctor._id} className="border rounded-md shadow-lg shadow-secondary p-2 m-3 bg-white ">
