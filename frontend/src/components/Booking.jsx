@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import {Loader, LoginPrompt} from '../import-export/ImportExport'
 import {toast} from 'react-hot-toast';
-import '../../public/style-sheet/buttons.css';
+import '../style-sheet/buttons.css';
 
 function Booking (props) {
 

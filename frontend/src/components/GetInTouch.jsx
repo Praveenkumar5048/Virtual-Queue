@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import {Feedback} from '../import-export/ImportExport'
-import '../../public/style-sheet/buttons.css';
+import '../style-sheet/buttons.css';
 
 function GetInTouch() {
   const [firstName, setFirstName] = useState("");

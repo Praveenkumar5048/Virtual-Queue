@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { Navbar, Loader, LoginPrompt } from "../import-export/ImportExport";
 import axios from "axios";
 import {toast} from 'react-hot-toast';
-import '../../public/style-sheet/token.css';
+import '../style-sheet/token.css';
 
 function MyAppointments() {
     

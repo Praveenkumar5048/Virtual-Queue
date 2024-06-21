@@ -3,7 +3,7 @@ import { Navbar, Booking, Queue, AdminQueueList, Announcement, Loader } from "..
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {toast} from 'react-hot-toast';
-import '../../public/style-sheet/buttons.css';
+import '../style-sheet/buttons.css';
 
 function DoctorDetails () {
     

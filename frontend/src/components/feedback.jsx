@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../public/style-sheet/buttons.css';
+import '../style-sheet/buttons.css';
 
 const Feedback = () => {
   const [showModal, setShowModal] = useState(false);

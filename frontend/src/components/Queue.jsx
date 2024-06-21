@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import io from 'socket.io-client';
-import '../../public/style-sheet/live.button.css';
+import '../style-sheet/live.button.css';
 
 const socket = io.connect("http://localhost:5500");
 

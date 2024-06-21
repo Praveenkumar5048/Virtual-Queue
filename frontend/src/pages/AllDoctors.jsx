@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { Navbar } from "../import-export/ImportExport";
 import axios from "axios";
 import { GoChevronDown } from "react-icons/go";
-import '../../public/style-sheet/buttons.css';
+import '../style-sheet/buttons.css';
 
 function AllDoctors() {
     const [searchQuery, setSearchQuery] = useState("");

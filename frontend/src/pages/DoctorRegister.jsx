@@ -6,8 +6,8 @@ import { GrBook, GrAchievement } from "react-icons/gr";
 import { FaRegAddressBook, FaRegHospital } from "react-icons/fa";
 import {Navbar, Loader} from "../import-export/ImportExport";
 import {toast} from 'react-hot-toast';
-import '../../public/style-sheet/checkbox.css';
-import '../../public/style-sheet/buttons.css';
+import '../style-sheet/checkbox.css';
+import '../style-sheet/buttons.css';
 
 function DoctorRegister() {
 
