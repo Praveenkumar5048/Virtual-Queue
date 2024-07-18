@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
 import { Navbar } from "../import-export/ImportExport";
 import axios from "axios";
-import { GoChevronDown } from "react-icons/go";
 import '../style-sheet/buttons.css';
 
 function AllDoctors() {
@@ -10,16 +9,15 @@ function AllDoctors() {
     const [specializationQuery, setSpecializationQuery] = useState("All");
     const [doctors, setDoctors] = useState([]);
     const navigate = useNavigate();
-
-    const handleSearchSpecialisation = async () => {
-        
-        try {
-            const response = await axios.get(`http://localhost:5500/doctor/search?query=${searchQuery}`);
-            setDoctors(response.data);
-        } catch (error) {
-            console.error("Error fetching doctors:", error);
-        }
-    };
+    
+    const specialization = [
+        { name: 'All' },
+        { name: 'Cardiology' },
+        { name: 'Pediatrics' },
+        { name: 'Neurology' },
+        { name: 'Dermatology' },
+        { name: 'Orthopedics'}
+    ];
 
     useEffect(() => {
         const getFilteredDoctors = async () => {
@@ -65,7 +63,6 @@ function AllDoctors() {
                     </div>
                 
                 </div>
-
                 {/* Doctors list */}
                 <div className="mx-4 lg:w-3/4 lg:mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {doctors.map(doctor => (

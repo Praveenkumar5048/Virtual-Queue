@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import {useNavigate} from "react-router";
 import {toast} from 'react-hot-toast';
 import logo from "/logo.svg";
-
+import axios from 'axios';
 
 function Navbar() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -11,16 +11,37 @@ function Navbar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-      const token = localStorage.getItem('token');
-      setLoggedIn(token ? true : false);
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
+        if (response.status === 200) {
+          setLoggedIn(true);
+        }
+      } catch (error) {
+        setLoggedIn(false);
+      }
+    };
+
+    checkAuth();
   });
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setLoggedIn(false);
-    toast.success("Logged out Successfully");
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post('http://localhost:5500/user/authLogout', {}, {withCredentials: true, });
+  
+      if (response.status === 200) {
+        // Clear any client-side storage if needed
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        toast.success("Logged out Successfully");
+        navigate("/");
+      } else {
+        toast.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Logout failed");
+    }
   };
 
   return (

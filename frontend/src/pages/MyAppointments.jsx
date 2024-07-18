@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router";
+import { jwtDecode } from 'jwt-decode';
 import { Navbar, Loader, LoginPrompt } from "../import-export/ImportExport";
 import axios from "axios";
 import {toast} from 'react-hot-toast';
@@ -7,19 +8,35 @@ import '../style-sheet/token.css';
 
 function MyAppointments() {
     
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-        return <LoginPrompt />;
-    }
-
-    const [tokens, setTokens] = useState([]);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userId, setUserId] = useState(null);
     const [loader, setLoader] = useState(true);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+          try {
+            const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
+            if(response.status === 200){
+                setIsAuthenticated(true);
+                const token = response.data.token;
+                const decodedToken = jwtDecode(token);
+                setUserId(decodedToken.user.id); 
+            }
+          } catch (error) {
+            setLoader(false);
+          }
+        };
+        checkAuth();
+    });
+    
+    const [tokens, setTokens] = useState([]); // These are tickets for the patients
     const navigate = useNavigate();
 
     useEffect(() => {
         const getAllAppointments = async () => {
+            if(userId){
             try {
-                const response = await axios.get(`http://localhost:5500/appointment/getAllUserAppointments/${user?.userId}`);
+                const response = await axios.get(`http://localhost:5500/appointment/getAllUserAppointments/${userId}`);
                 setTokens(response.data);
                 setLoader(false);
               } catch (error) {
@@ -27,16 +44,19 @@ function MyAppointments() {
                 navigate("/");
                 console.error("Error fetching tokens:", error);
               }
+            };
         }
         getAllAppointments();
-    }, []);
+    }, [userId]);
     
     if(loader){
-        return (
-        <Loader />
-        );
+        return <Loader />;
     }
-
+    
+    if (!isAuthenticated) {
+        return <LoginPrompt />;
+    }
+    
     return (
         <>
            <Navbar />

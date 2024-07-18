@@ -34,7 +34,8 @@ const Login = () => {
     e.preventDefault();
     try{
       setLoader(true);
-      const response = await axios.post("http://localhost:5500/user/login", formData);
+      const response = await axios.post("http://localhost:5500/user/login", formData,  { withCredentials: true });
+      
       const { token, user } = response.data; 
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));

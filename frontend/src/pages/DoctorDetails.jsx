@@ -7,7 +7,6 @@ import '../style-sheet/buttons.css';
 
 function DoctorDetails () {
     
-    const user = JSON.parse(localStorage.getItem('user'));
     const [loader, setLoader] = useState(true);
 
     const { doctorId } = useParams();
@@ -63,13 +62,22 @@ function DoctorDetails () {
         }
         setIsAvailable(false);
     };
-    const handleBookingClick = () => {
-        if (!user) {
-           toast.error("Login to Book!!");  
-        }else{
-            setBookingForm(true);
+
+    const handleBookingClick = async () => {
+        try {
+            const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
+            if (response.status === 401) {
+                toast.error("Login to Book!!"); 
+            } 
+        }catch(error) {
+            if (error.response && error.response.status === 401) {
+                toast.error("Login to Book!!");
+            } else {
+                toast.error("Unknown error .");
+            }
         }
     }
+
     const handleBookingSuccess = () => {
         setBookingForm(false); 
     };
