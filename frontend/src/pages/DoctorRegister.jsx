@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
 import { AiOutlineUser, AiOutlineMail, AiFillPhone } from 'react-icons/ai';
 import { GrBook, GrAchievement } from "react-icons/gr";
 import { FaRegAddressBook, FaRegHospital } from "react-icons/fa";
-import {Navbar, Loader} from "../import-export/ImportExport";
+import {Navbar, Loader, LoginPrompt} from "../import-export/ImportExport";
 import {toast} from 'react-hot-toast';
 import '../style-sheet/checkbox.css';
 import '../style-sheet/buttons.css';
 
 function DoctorRegister() {
-
-    const user = JSON.parse(localStorage.getItem('user'));
+    
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userId, setUserId] = useState(null);
     const navigate = useNavigate();
-    const [loader, setLoader] = useState();
-
+    const [loader, setLoader] = useState(true);
+    
     const [formData, setFormData] = useState({
-        userId: user?.userId,
+        userId: userId,
         fullname: '',
         hospitalname: '',
         email: '',
@@ -27,6 +29,29 @@ function DoctorRegister() {
         qualifications: '',
         availability: []
     });
+
+    useEffect(() => {
+        const checkAuth = async () => {
+          try {
+            const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
+            if(response.status === 200){
+                setIsAuthenticated(true);
+                const token = response.data.token;
+                const decodedToken = jwtDecode(token);
+                setUserId(decodedToken.user.id); 
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    userId: userId
+                }));
+            }
+          } catch (error) {
+            // u can print any error here to debug
+          } finally {
+            setLoader(false);
+          }
+        };
+        checkAuth();
+    }, []);
 
     const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     const initialAvailability = daysOfWeek.map(day => ({ day, available: false, start: '', end: '' }));
@@ -72,9 +97,10 @@ function DoctorRegister() {
     };
 
     if(loader){
-        return (
-          <Loader />
-        );
+        return <Loader />
+    }
+    if (!isAuthenticated) {
+        return <LoginPrompt />;
     }
 
     return (

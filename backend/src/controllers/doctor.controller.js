@@ -5,7 +5,7 @@ import { Doctor, Announcement } from "../models/doctor.model.js";
 export const RegisterDoctor = asyncHandler(async (req, res, next) => {
     
     const { userId, fullname, hospitalname, email, phone, address, gender, specializations, qualifications, availability } = req.body;
-
+   
     // checking the info provided by the admin
     if (!userId || !fullname || !hospitalname || !email || !phone || !address || !gender || !specializations || !qualifications || !availability) {
         return res.status(400).json({ message: "All fields are required" });
