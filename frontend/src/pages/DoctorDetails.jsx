@@ -20,12 +20,10 @@ function DoctorDetails () {
     useEffect(() => {
         const fetchDoctorDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5500/doctor/getInfo/${doctorId}`);
+                const response = await axios.get(`http://localhost:5500/doctor/getInfo/${doctorId}`,  { withCredentials: true });
                 setDoctor(response.data);
                 checkAvailability(response.data.availability);
-                if(response.data.userId === user?.userId){
-                    setCheckAdmin(true);
-                }
+                setCheckAdmin(response.data.admin);
                 setLoader(false);
             } catch (error) {
                 setLoader(false);
@@ -66,9 +64,7 @@ function DoctorDetails () {
     const handleBookingClick = async () => {
         try {
             const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
-            if (response.status === 401) {
-                toast.error("Login to Book!!"); 
-            } 
+            setBookingForm(true);
         }catch(error) {
             if (error.response && error.response.status === 401) {
                 toast.error("Login to Book!!");
@@ -147,7 +143,7 @@ function DoctorDetails () {
                 {isAvailable ? (
                         <button
                             type="button"
-                            className="button2 mt-4"
+                            className="button2 mt-4 z-0"
                             onClick={handleBookingClick}
                         >
                             Book

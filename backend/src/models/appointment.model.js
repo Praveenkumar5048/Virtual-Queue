@@ -61,14 +61,15 @@ const appointmentSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+// this is called pre middleware
 appointmentSchema.pre('save', async function(next) {
     
     if (this.isNew) {
-        console.log('New appointment, setting queue number');
+        console.log('New appointment is getting created, setting queue number');
         const todayDate = new Date();
         todayDate.setHours(0, 0, 0, 0); 
         // Find and update the counter for the doctor and date
-        const counter = await Counter.findOneAndUpdate(
+        const counter = await Counter.findOneAndUpdate( 
             { doctorId: this.doctorId, date: todayDate },
             { $inc: { count: 1 } },
             { new: true, upsert: true } // Create the document if it doesn't exist
@@ -77,7 +78,7 @@ appointmentSchema.pre('save', async function(next) {
         // Assign the queue number
         this.queueNumber = counter.count;
     }
-    next();
+    next(); // continue with the save operation
 });
 
 export const Appointment = mongoose.model("appointment", appointmentSchema); 

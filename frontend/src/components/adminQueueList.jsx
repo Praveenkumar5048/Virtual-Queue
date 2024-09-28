@@ -24,6 +24,7 @@ useEffect(() => {
 const handleMarkCompleted = async (patientId) => {
    try{
      const response = await axios.put(`http://localhost:5500/appointment/update/patient/status/${patientId}`);
+     // this is not actually patientId, it is booking Id
      toast.success("Token marked completed");
    }catch(error){
       console.log(error);

@@ -1,4 +1,6 @@
 import asyncHandler from "../utilis/asyncHandler.js";
+import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 
 import { Doctor, Announcement } from "../models/doctor.model.js";
 
@@ -52,8 +54,22 @@ export const getDoctorDetails = asyncHandler(async (req, res, next) => {
     if (!doctor) {
         return res.status(404).json({ message: 'Doctor not found' }); 
     }
-    
-    res.status(200).json(doctor);
+    const token = req.cookies.token;
+    let isAdmin = false;
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.SECRET);
+            const decodedUserId = new mongoose.Types.ObjectId(decoded.user.id);
+            if (decodedUserId.equals(doctor.userId)) {
+                isAdmin = true;
+            }
+        } catch (error) {
+            console.log('Invalid token:', error.message);
+        }
+    } 
+    const doctorDetails = { ...doctor._doc, admin: isAdmin };
+    res.status(200).json(doctorDetails);
 });
 
 export const fetchAnnouncement =  asyncHandler(async (req, res, next) =>{

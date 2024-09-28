@@ -1,79 +1,48 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-
-function Footer() {
+const Footer = () => {
   return (
-    <div className=" w-full text-center px-2 ">
-
-      <div className="bg-primary text-white flex flex-col items-center py-2 sm:px-6 ">
-
-        {/* footer top */}
-        <div className=" flex flex-col items-center justify-evenly px-4 py-4 sm:px-6 lg:px-8 lg:flex-row w-full gap-y-2">
-
-          <h1 className="relative text-lg font-semibold before:block before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-0.5 before:rounded-full before:bg-onhover before:transition-all before:delay-150 before:ease-in-out hover:before:w-full ">
-            Quick Links
-          </h1>
-
-          {/* menus */}
-          <div className="my-3">
-            <ul className="flex flex-col justify-between gap-3 items-center text-sm font-semibold md:flex-row md:gap-8">
-              <li>
-                <NavLink
-                  to={"/"}
-                  className="relative cursor-pointer before:block before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-0.5 before:rounded-full before:bg-onhover before:transition-all before:delay-150 before:ease-in-out hover:before:w-full "
-                >
-                  Privacy Policy
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={"/"}
-                  className="relative cursor-pointer before:block before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-0.5 before:rounded-full before:bg-onhover before:transition-all before:delay-150 before:ease-in-out hover:before:w-full "
-                >
-                  Terms & Conditions
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={"/"}
-                  className="relative cursor-pointer before:block before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-0.5 before:rounded-full before:bg-onhover before:transition-all before:delay-150 before:ease-in-out hover:before:w-full "
-                >
-                  About Us
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={"/"}
-                  className="relative cursor-pointer before:block before:absolute before:bottom-[-4px] before:left-0 before:w-0 before:h-0.5 before:rounded-full before:bg-onhover before:transition-all before:delay-150 before:ease-in-out hover:before:w-full "
-                >
-                  Contact Us
-                </NavLink>
-              </li>
-            </ul>
-          </div>
+    <footer className="text-gray-600 body-font bg-primary">
+      <div className="container px-5 py-8 mx-auto flex flex-col items-center">
+        <a className="flex title-font font-medium items-center justify-center text-gray-900">
+          <img src="/logo.svg" alt="" className="w-8" />
+          <span className="ml-3 text-xl font-medium text-text">Medi Queue</span>
+        </a>
+        <p className="text-sm text-white mt-4">© 2024 All Rights reserved</p>
+        <div className="flex justify-center mt-4">
+          <a className="text-gray-500">
+            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-5 h-5" viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+            </svg>
+          </a>
+          <a className="ml-3 text-gray-500">
+            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-5 h-5" viewBox="0 0 24 24">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+            </svg>
+          </a>
+          <a className="ml-3 text-gray-500">
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-5 h-5" viewBox="0 0 24 24">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+            </svg>
+          </a>
+          <a className="ml-3 text-gray-500">
+            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" className="w-5 h-5" viewBox="0 0 24 24">
+              <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+              <circle cx="4" cy="4" r="2" stroke="none"></circle>
+            </svg>
+          </a>
         </div>
-
-        {/* footer bottom */}
-
-        <div className="w-full flex flex-col  items-center justify-between px-4 lg:px-0 md:flex-row py-4">
-          {/* title */}
-          <div className="title">
-            <h1 className="font-bold text-2xl">MediHub</h1>
-          </div>
-
-          <div className=" mt-2 ">
-            <p className="text-sm font-medium ">
-              © 2023 DevUI. All rights reserved.
-            </p>
-          </div>
+        <div className="mt-4 text-center">
+          <p className="text-sm text-white">123 Healthcare Avenue, Med City, Health State, 45678</p>
+          <p className="text-sm text-white">Email: support@mediqueue.com | Phone: (123) 456-7890</p>
         </div>
-
       </div>
-
-
-    </div>
+    </footer>
   );
 }
 
 export default Footer;
+
+

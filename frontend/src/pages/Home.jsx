@@ -1,5 +1,5 @@
 import React from 'react'
-import { Hero, WhyUs, GetInTouch, Navbar, Footer } from "../import-export/ImportExport";
+import { Hero, WhyUs, Navbar, Footer } from "../import-export/ImportExport";
 
 function Home() {
     return (
@@ -7,7 +7,6 @@ function Home() {
             <Navbar />
             <Hero />
             <WhyUs />
-            <GetInTouch />
             <Footer />
         </>
     )

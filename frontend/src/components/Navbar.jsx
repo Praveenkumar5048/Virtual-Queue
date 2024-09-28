@@ -90,7 +90,7 @@ function Navbar() {
                 My Appointments
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink
                 to={"/aboutus"}
                 className={({ isActive }) =>
@@ -100,7 +100,7 @@ function Navbar() {
               >
                 About Us
               </NavLink>
-            </li>
+            </li> */}
             {!loggedIn ? (
             <>
               <li className="hover:scale-105">
