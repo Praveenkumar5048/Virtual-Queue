@@ -10,6 +10,7 @@ function Booking (props) {
   if (!user) {
       return <LoginPrompt />;
   }
+  
   const [loader, setLoader] = useState(false);
 
   const [patientDetails, setPatientDetails] = useState({
@@ -22,20 +23,32 @@ function Booking (props) {
 
   const handleBooking = async () => {
     setLoader(true);
+
     try {
-        const response = await axios.post('http://localhost:5500/appointment/bookAppointment', {
-          doctorId: props.doctorId,
-          ...patientDetails,
-        });
+        
+        const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
+
         if(response.status === 200){
-          setLoader(false);
-          toast.success("Booked Successfully");
-          props.onBookingSuccess();
+            const response = await axios.post('http://localhost:5500/appointment/bookAppointment', {
+              doctorId: props.doctorId,
+              ...patientDetails,
+            });
+          
+            if (response.status === 200) {
+                toast.success("Booked successfully");
+            } else {
+                toast.error("Booking failed");
+            }
+        
         }
     } catch (error) {
+
+        toast.error("Session Expired");
+        console.error('Session Expired booking appointment:', error);
+
+    } finally {
         setLoader(false);
-        toast.error("Error in Booking");
-        console.error('Error booking appointment:', error);
+        props.onBookingSuccess();
     }
   };
 

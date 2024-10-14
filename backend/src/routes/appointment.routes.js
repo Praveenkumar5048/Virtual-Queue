@@ -1,5 +1,6 @@
 import express from "express";
 import { bookAppointment, getAllAppointments, updateAppointment, getAllUserAppointments} from "../controllers/appointment.controller.js";
+import {authLoginCheck, authLogout} from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
