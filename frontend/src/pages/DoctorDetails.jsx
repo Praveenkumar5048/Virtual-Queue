@@ -7,6 +7,7 @@ import '../style-sheet/buttons.css';
 
 function DoctorDetails () {
     
+    const user = JSON.parse(localStorage.getItem('user'));
     const [loader, setLoader] = useState(true);
 
     const { doctorId } = useParams();
@@ -15,7 +16,7 @@ function DoctorDetails () {
     const [bookings, setBookings] = useState([]); // To store the booking's list for queue
     const [isAvailable, setIsAvailable] = useState(false); // To check availability of doctor
     const [checkAdmin, setCheckAdmin] = useState(false); // To Checking whether logged user is admin
-
+    const [userBooked, setUserBooked] = useState(false);
 
     useEffect(() => {
         const fetchDoctorDetails = async () => {
@@ -31,13 +32,14 @@ function DoctorDetails () {
             }
         };
         fetchDoctorDetails();
-    }, [doctorId]);
+    }, [doctorId, bookingForm]);
     
     useEffect(() => {
         const fetchAllBookings = async () => {
           try {
-            const response = await axios.get(`http://localhost:5500/appointment/getQueueList/${doctorId}`);
+            const response = await axios.get(`http://localhost:5500/appointment/getQueueList/${doctorId}/${user?.userId}`);
             setBookings(response.data);
+            setUserBooked(true);
           } catch (error) {
             console.error('Error fetching queue details:', error);
           }
@@ -62,6 +64,7 @@ function DoctorDetails () {
     };
 
     const handleBookingClick = async () => {
+
         try {
             const response = await axios.get('http://localhost:5500/user/authCheck', { withCredentials: true });
             setBookingForm(true);
@@ -156,10 +159,9 @@ function DoctorDetails () {
         </div>
 
         { bookingForm && <Booking doctorId={doctorId} onBookingSuccess={handleBookingSuccess} onClose={handleBookingClose} />}
-        {checkAdmin ? 
-          <AdminQueueList bookings={bookings} setBookings={setBookings}/> :
-          <Queue bookings={bookings} setBookings={setBookings}/> 
-        }
+        {checkAdmin && <AdminQueueList bookings={bookings} setBookings={setBookings}/> }
+        { userBooked && <Queue bookings={bookings} setBookings={setBookings}/> }
+        
        </>
     );
 }

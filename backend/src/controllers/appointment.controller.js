@@ -10,7 +10,7 @@ const authToken = process.env.authToken;
 const client = new twilio(accountSid, authToken);
 
 export const bookAppointment = asyncHandler(async (req, res, next) => {
-
+     
     const { doctorId, patientName, age, gender, contact, bookedBy} = req.body;
 
     try {
@@ -63,6 +63,18 @@ export const getAllAppointments = asyncHandler(async (req, res, next) => {
     const endOfToday = endOfDay(currentDate);
 
     const doctorId = req.params.doctorId;
+    const userId = req.params.userId;
+
+    const userAppointment = await Appointment.findOne({
+        doctorId,
+        bookedBy : userId,
+        date: { $gte: startOfToday, $lte: endOfToday }
+    });
+
+    if (!userAppointment) {
+        res.status(404).json({ message: 'User has not booked an appointment for today.' });
+    }
+
     const appointments = await Appointment.find({doctorId, date: { $gte: startOfToday, $lte: endOfToday }});
     
     res.status(200).json(appointments);

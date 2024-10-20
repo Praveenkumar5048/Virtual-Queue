@@ -34,13 +34,9 @@ function Booking (props) {
               ...patientDetails,
             });
           
-            if (response.status === 200) {
-                toast.success("Booked successfully");
-            } else {
-                toast.error("Booking failed");
-            }
-        
+            toast.success("Booked successfully");
         }
+        
     } catch (error) {
 
         toast.error("Session Expired");

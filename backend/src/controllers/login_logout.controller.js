@@ -46,7 +46,7 @@ export const login = asyncHandler(async (req, res, next) => {
          // Create JWT token
          const payload = { user: { id: user._id } };
     
-         jwt.sign(payload, process.env.SECRET, { expiresIn: 60 }, (err, token) => {
+         jwt.sign(payload, process.env.SECRET, { expiresIn: 3600}, (err, token) => {
            if (err) {
              console.error(err.message);
              return res.status(500).json({ msg: 'Error generating token' });
