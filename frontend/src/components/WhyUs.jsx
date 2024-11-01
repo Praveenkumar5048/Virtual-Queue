@@ -12,7 +12,7 @@ function WhyUs() {
         <h1 className=" text-3xl md:text-4xl lg:text-5xl font-bold text-primary text-center">
           What we do
         </h1>
-        <p className="text-xs md:text-base md:max-w-2xl mt-3 text-center text-black/60 font-bold">
+        <p className="text-xs md:text-lg md:max-w-4xl mt-3 text-center text-black/60 font-bold">
           We understand that your health and well-being are of paramount
           importance. By choosing our platform, you'll benefit from streamlined appointment booking processes, saving you valuable time and effort
           Our user-friendly interface ensures a hassle-free experience, from scheduling appointments to managing virtual queues.

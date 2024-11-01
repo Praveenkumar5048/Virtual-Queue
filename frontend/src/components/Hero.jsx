@@ -1,4 +1,5 @@
 import React from "react";
+import ReactTypingEffect from 'react-typing-effect';
 import { IoIosArrowForward } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 
@@ -8,7 +9,16 @@ function Hero() {
       
         <div className="h-full flex flex-col justify-center px-6 py-3 text-center lg:text-left mb-8 lg:mb-0 sm:ml-10">
          
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black/60 py-2">Streamlining Healthcare
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black/60 py-2">
+            Streamlining{' '}
+            <ReactTypingEffect
+            text={['Healthcare']}
+            speed={200}
+            eraseSpeed={200}
+            typingDelay={1000}
+            eraseDelay={1000}
+            />
+          
             <br />
             <span className="text-secondary">With</span>
             <br />

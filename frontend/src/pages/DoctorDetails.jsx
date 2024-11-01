@@ -41,6 +41,7 @@ function DoctorDetails () {
             setBookings(response.data);
             setUserBooked(true);
           } catch (error) {
+            console.log("Getting Error here ");
             console.error('Error fetching queue details:', error);
           }
         };

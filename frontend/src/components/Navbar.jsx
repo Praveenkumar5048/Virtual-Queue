@@ -46,7 +46,7 @@ function Navbar() {
 
   return (
     <div
-      className=" sticky top-0  w-full h-[8vh]  bg-primary ">
+      className=" sticky top-0  w-full h-[8vh] bg-primary z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between lg:px-6  px-3 py-3">
         {/* logo */}
         <div className="flex items-center gap-3">

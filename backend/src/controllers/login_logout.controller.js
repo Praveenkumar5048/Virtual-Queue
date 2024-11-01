@@ -25,7 +25,6 @@ export const register = asyncHandler(async (req, res, next) => {
         res.status(500).send('Server Error');
       }
 })
-
 //! Login the user
 export const login = asyncHandler(async (req, res, next) => {
     try {

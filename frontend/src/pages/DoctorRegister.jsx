@@ -115,31 +115,68 @@ function DoctorRegister() {
                         <label htmlFor="fullname" className=" font-bold mb-2 flex items-center">
                             <AiOutlineUser className="mr-2" /> Full Name
                         </label>
-                        <input type="text" id="fullname" name="fullname" value={formData.fullname} onChange={handleChange} required placeholder="Dr. XYZ" className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black" />
+                        <input
+                            type="text"
+                            id="fullname"
+                            name="fullname"
+                            value={formData.fullname}
+                            onChange={handleChange}
+                            required
+                            placeholder="Dr. XYZ"
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150"
+                        />
                     </div>
                     <div>
                         <label htmlFor="hospital" className="font-bold mb-2 flex items-center">
                             <FaRegHospital className="mr-2" /> Hospital Name
                         </label>
-                        <input type="text" id="hospital" name="hospitalname" value={formData.hospitalname} onChange={handleChange} required className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black" />
+                        <input 
+                            type="text" 
+                            id="hospital" 
+                            name="hospitalname" 
+                            value={formData.hospitalname} 
+                            onChange={handleChange} 
+                            required 
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150" />
                     </div>
                     <div>
                         <label htmlFor="email" className=" font-bold mb-2 flex items-center">
                             <AiOutlineMail className="mr-2" /> Email Address
                         </label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black" />
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            value={formData.email} 
+                            onChange={handleChange} 
+                            required 
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150" />
                     </div>
                     <div>
                         <label htmlFor="phone" className=" font-bold mb-2 flex items-center">
                             <AiFillPhone className="mr-2" /> Contact No
                         </label>
-                        <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleChange} required minLength="10" maxLength="10" className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black" />
+                        <input 
+                            type="text" 
+                            id="phone" 
+                            name="phone" 
+                            value={formData.phone} 
+                            onChange={handleChange} 
+                            required minLength="10" maxLength="10" 
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150" />
                     </div>
                     <div>
                         <label htmlFor="address" className=" font-bold mb-2 flex items-center">
                             <FaRegAddressBook className="mr-2" /> Hospital Address
                         </label>
-                        <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black" />
+                        <input 
+                            type="text" 
+                            id="address" 
+                            name="address" 
+                            value={formData.address} 
+                            onChange={handleChange} 
+                            required 
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150" />
                     </div>
                     <div>
                         <label htmlFor="gender" className=" font-bold mb-2 flex items-center">
@@ -162,13 +199,28 @@ function DoctorRegister() {
                         <label htmlFor="specializations" className="font-bold mb-2 flex items-center">
                             <GrAchievement className="mr-2" /> Specialization
                         </label>
-                        <input type="text" id="specializations" name="specializations" value={formData.specializations} onChange={handleChange} required className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black" placeholder="e.g., Cardiology, Neurology" />
+                        <input 
+                            type="text" 
+                            id="specializations" 
+                            name="specializations" 
+                            value={formData.specializations} 
+                            onChange={handleChange} 
+                            required 
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150" 
+                            placeholder="e.g., Cardiology, Neurology" />
                     </div>
                     <div>
                         <label htmlFor="qualifications" className= "font-bold mb-2 flex items-center">
                             <GrBook className="mr-2" /> Qualifications
                         </label>
-                        <textarea id="qualifications" name="qualifications" value={formData.qualifications} onChange={handleChange} required className="rounded p-1 mb-2 w-full md:w-80 lg:w-96 text-black"></textarea>
+                        <textarea 
+                            id="qualifications" 
+                            name="qualifications" 
+                            value={formData.qualifications} 
+                            onChange={handleChange} 
+                            required 
+                            className="w-full md:w-80 lg:w-96 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 placeholder-gray-400 transition ease-in-out duration-150">
+                        </textarea>
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-2">Available On</h3>
