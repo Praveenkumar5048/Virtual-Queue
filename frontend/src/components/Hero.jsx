@@ -22,7 +22,7 @@ function Hero() {
             <br />
             <span className="text-secondary">With</span>
             <br />
-            <span className="text-secondary">Real-Time Queues</span>
+            <span className="text-secondary">Real-Time Queue</span>
             </h1>
 
             <div className="flex flex-col items-center md:flex-row gap-2">

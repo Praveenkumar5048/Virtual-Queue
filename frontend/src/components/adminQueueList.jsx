@@ -56,6 +56,7 @@ return (
                             <button
                                 className="px-3 py-1 bg-primary text-white rounded hover:bg-secondary"
                                 onClick={() => handleMarkCompleted(booking._id)}
+                                disabled = {booking.status}
                             >
                             {booking.status === 'Completed' ? '----' : 'Mark Completed'}   
                             </button>

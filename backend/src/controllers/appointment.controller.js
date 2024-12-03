@@ -65,6 +65,11 @@ export const getAllAppointments = asyncHandler(async (req, res, next) => {
 
     const doctorId = req.params.doctorId;
     const userId = req.params.userId;
+    
+    const doctor = await Doctor.findOne({_id : doctorId});
+    if(!doctor) console.log("Doctor Not found")
+    
+    const admin = doctor.userId.toString() === userId;
 
     const userAppointment = await Appointment.findOne({
         doctorId,
@@ -72,7 +77,7 @@ export const getAllAppointments = asyncHandler(async (req, res, next) => {
         date: { $gte: startOfToday, $lte: endOfToday }
     });
 
-    if (!userAppointment) {
+    if (!userAppointment && !admin) {
         return res.status(404).json({ message: 'User has not booked an appointment for today.' });
     }
 

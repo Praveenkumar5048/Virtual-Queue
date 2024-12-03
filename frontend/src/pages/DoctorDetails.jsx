@@ -39,6 +39,7 @@ function DoctorDetails () {
           try {
             const response = await axios.get(`http://localhost:5500/appointment/getQueueList/${doctorId}/${user?.userId}`);
             setBookings(response.data);
+            console.log(response.data)
             setUserBooked(true);
           } catch (error) {
             console.log("Getting Error here ");

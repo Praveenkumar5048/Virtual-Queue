@@ -79,6 +79,7 @@ export const fetchAnnouncement =  asyncHandler(async (req, res, next) =>{
 })
 
 export const addAnnouncement = asyncHandler(async (req, res, next) =>{
+    
     const doctorId = req.params.doctorId;
     const createAnnouncement = await Announcement.create({
         userId: doctorId,
